@@ -8,8 +8,20 @@ body {
     background-image: url('../img/desert.jpg');
     background-size: cover;
     background-position: center;
+    font-family: zabras, Arial, Helvetica, sans-serif;
 }
 
 canvas {
     background-color: black;
+}
+
+@font-face {
+    font-family: 'zabras';
+    src: url('fonts/zabars.ttf') format('truetype');
+}
+
+h1 {
+    font-size: 64px;
+    letter-spacing: 3px;
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
 }
