@@ -1,4 +1,4 @@
-class Coin extends drawableObject {
+class Coin extends DrawableObject {
 
     IMAGES = [
         '../img/8_coin/coin_1.png',
@@ -6,12 +6,12 @@ class Coin extends drawableObject {
     ];
 
     constructor() {
-        super();
+        super().loadImage('../img/8_coin/coin_1.png');
         this.loadImages(this.IMAGES);
-        this.width = 40;
-        this.height = 40;
-        this.x = 400;
-        this.y = 400;
+        this.width = 120;
+        this.height = 120;
+        this.x = 500 + Math.random() * 1500;    
+        this.y = 360;
     }
 
 }
