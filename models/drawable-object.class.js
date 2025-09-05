@@ -48,7 +48,7 @@ class DrawableObject {
             ctx.beginPath();
             ctx.lineWidth = "3"; 
             ctx.strokeStyle ="red";
-            ctx.rect(this.x + 20, this.y + 20, this.width - 30, this.height - 40);
+            ctx.rect(this.x + 20, this.y + 60, this.width - 30, this.height - 60);
             ctx.stroke();
         }
         if(this instanceof Character) {
