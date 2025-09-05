@@ -11,7 +11,7 @@ class Coin extends DrawableObject {
         this.width = 120;
         this.height = 120;
         this.x = 500 + Math.random() * 1500;    
-        this.y = 360;
+        this.y = 345;
     }
 
 }
