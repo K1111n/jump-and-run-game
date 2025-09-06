@@ -39,13 +39,45 @@ class World {
         }
 
     }
+
     checkCollisions() {
-        this.level.enemies.forEach((enemy) => {
+        this.level.enemies.forEach((enemy, index) => {
                 if(this.character.isColliding(enemy) ) {
-                    this.character.hit();
-                    this.statusBar.setPercentage(this.character.energy);
+                    if(this.character.y + this.character.height - 15 > enemy.y) {
+                        this.character.hit();
+                        this.statusBar.setPercentage(this.character.energy);
+                        console.log('Character got hit');
+                    } else if(this.character.y + this.character.height - 15 <= enemy.y) {
+                        console.log('Enemy dead');
+                        this.level.enemies.splice(index, 1);
+                    }
                 }
-            })
+            });
+        this.level.coins.forEach((coin, index) => {
+                if(this.character.isColliding(coin)) {
+                    this.level.coins.splice(index, 1);
+                    this.character.collectCoin();
+                    this.coinBar.setPercentage(this.character.coins);
+                    console.log('Coin collected');
+                }
+            });
+        this.level.bottles.forEach((bottle, index) => {
+                if(this.character.isColliding(bottle)) {
+                    this.level.bottles.splice(index, 1);
+                    this.character.collectBottle();
+                    this.bottleBar.setPercentage(this.character.bottles);
+                    console.log('Bottle collected');
+                }
+            });
+        this.throwableObjects.forEach((bottle, bottleIndex) => {
+                this.level.enemies.forEach((enemy, enemyIndex) => {
+                    if(bottle.isColliding(enemy)) {
+                        this.level.enemies.splice(enemyIndex, 1);
+                        this.throwableObjects.splice(bottleIndex, 1);
+                        console.log('Enemy hit by bottle');
+                    }
+                });
+            });
     }
 
     draw() {
