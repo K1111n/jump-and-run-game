@@ -5,6 +5,8 @@ class MovableObject extends DrawableObject {
     speedY = 0;
     acceleration = 2.5;
     energy = 100;
+    coins = 0;
+    bottle = 0;
     lastHit = 0;
 
     applyGravity() {
@@ -39,6 +41,18 @@ class MovableObject extends DrawableObject {
         } else {
             this.lastHit = new Date().getTime();
         }
+    }
+
+    collectCoin() {
+        this.coins += 1;
+    }
+
+    collectBottle() {
+        this.bottle += 1;
+    }
+
+    bottleHasBeenThrown() {
+        this.bottle -= 1;
     }
 
     isDead() {
