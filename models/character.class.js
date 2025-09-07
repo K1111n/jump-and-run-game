@@ -1,7 +1,10 @@
 class Character extends MovableObject {
     height = 280;
     y = 150;
+    coins = 0;
+    bottles = 0;
     lastMovement = new Date().getTime();
+    deathAnimationComplete = false;
     
     IMAGES_WALKING = [
         '../img/2_character_pepe/2_walk/W-21.png',
@@ -102,8 +105,14 @@ class Character extends MovableObject {
         }, 1000 / 60);
 
         setInterval(() => {
-            if(this.isDead()) {               
-                this.playAnimation(this.IMAGES_DEAD); 
+            if(this.isDead()) {       
+                if(!this.deathAnimationComplete) {
+                    this.playAnimation(this.IMAGES_DEAD);
+                    let i = this.currentImage % this.IMAGES_DEAD.length;
+                    if(i === this.IMAGES_DEAD.length - 1) {
+                        this.deathAnimationComplete = true;
+                    }
+                }
             } else if(this.isHurt()) {                
                 this.playAnimation(this.IMAGES_HURT); 
             } else if(this.isAboveGround()) {

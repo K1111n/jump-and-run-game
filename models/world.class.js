@@ -70,7 +70,15 @@ class World {
         this.throwableObjects.forEach((bottle, bottleIndex) => {
                 this.level.enemies.forEach((enemy, enemyIndex) => {
                     if(bottle.isColliding(enemy)) {
-                        this.level.enemies.splice(enemyIndex, 1);
+                        if(enemy instanceof Endboss) {
+                            enemy.hit();
+                            this.statusBarEndboss.setPercentage(enemy.energy / 25 * 100);
+                            if(enemy.isDead) {
+                                console.log('Endboss defeated');
+                            }
+                        } else {
+                            this.level.enemies.splice(enemyIndex, 1);
+                        }
                         this.throwableObjects.splice(bottleIndex, 1);
                     }
                 });
