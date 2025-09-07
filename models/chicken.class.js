@@ -37,7 +37,7 @@ class Chicken extends MovableObject {
     killEnemy() {
         this.isDead = true;
         this.speed = 0;
-        clearInterval(this.moveInterval); // Stoppe die Bewegung
+        clearInterval(this.moveInterval);
         setInterval(() => {
             this.playAnimation(this.IMAGES_DEAD);
         }, 200);
