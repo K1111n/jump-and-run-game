@@ -45,11 +45,12 @@ class World {
     checkCollisions() {
         this.level.enemies.forEach((enemy, index) => {
                 if(this.character.isColliding(enemy) ) {
-                    if(this.character.y + this.character.height - 15 > enemy.y) {
+                    if(this.character.speedY < 0 && this.character.y < enemy.y) {
+                        this.level.enemies.splice(index, 1);
+                        this.character.jump();
+                    } else {
                         this.character.hit();
                         this.statusBar.setPercentage(this.character.energy);
-                    } else if(this.character.y + this.character.height - 15 <= enemy.y) {
-                        this.level.enemies.splice(index, 1);
                     }
                 }
             });
