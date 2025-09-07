@@ -1,7 +1,8 @@
 class Character extends MovableObject {
-
     height = 280;
     y = 150;
+    lastMovement = new Date().getTime();
+    
     IMAGES_WALKING = [
         '../img/2_character_pepe/2_walk/W-21.png',
         '../img/2_character_pepe/2_walk/W-22.png',
@@ -11,7 +12,7 @@ class Character extends MovableObject {
         '../img/2_character_pepe/2_walk/W-26.png',
     ];
 
-    IMAGES = [
+    IMAGES_IDLE = [
         '../img/2_character_pepe/1_idle/idle/I-3.png',
         '../img/2_character_pepe/1_idle/idle/I-4.png',
         '../img/2_character_pepe/1_idle/idle/I-5.png',
@@ -69,7 +70,7 @@ class Character extends MovableObject {
     constructor() {
         super().loadImage('../img/2_character_pepe/2_walk/W-21.png');
         this.loadImages(this.IMAGES_WALKING);
-        this.loadImages(this.IMAGES);
+        this.loadImages(this.IMAGES_IDLE);
         this.loadImages(this.IMAGES_JUMPING);
         this.loadImages(this.IMAGES_DEAD);
         this.loadImages(this.IMAGES_HURT);
@@ -79,29 +80,29 @@ class Character extends MovableObject {
     }
 
     animate() {
-
         setInterval(() => {
             if(this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
                 this.moveRight();
                 this.otherDirection = false;
-                
+                this.lastMovement = new Date().getTime();
             }
 
             if(this.world.keyboard.LEFT && this.x > 0) {
                 this.moveLeft();
                 this.otherDirection = true;
+                this.lastMovement = new Date().getTime();
             }
 
             if(this.world.keyboard.UP && !this.isAboveGround()) {
                 this.jump();
+                this.lastMovement = new Date().getTime();
             }
 
             this.world.camera_x = -this.x + 100;
         }, 1000 / 60);
 
-        setInterval( () => {
-            if(this.isDead()) {    
-                console.log('character is dead');           
+        setInterval(() => {
+            if(this.isDead()) {               
                 this.playAnimation(this.IMAGES_DEAD); 
             } else if(this.isHurt()) {                
                 this.playAnimation(this.IMAGES_HURT); 
@@ -109,7 +110,17 @@ class Character extends MovableObject {
                 this.playAnimation(this.IMAGES_JUMPING);   
             } else if(this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
                 this.playAnimation(this.IMAGES_WALKING);
+            } else if(this.isSleeping()) {
+                this.playAnimation(this.IMAGES_SLEEPING);
+            } else {
+                this.playAnimation(this.IMAGES_IDLE);
             }
         }, 100);
+    }
+
+    isSleeping() {
+        let timepassed = new Date().getTime() - this.lastMovement;
+        timepassed = timepassed / 1000; 
+        return timepassed > 3; 
     }
 }

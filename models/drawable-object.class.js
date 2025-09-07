@@ -23,52 +23,55 @@ class DrawableObject {
     }   
 
     drawFrame(ctx) {
-        if(this instanceof Chicken || this instanceof ChickenSmall || this instanceof ThrowableObject) {
+        if(this instanceof Chicken || this instanceof ChickenSmall) {
             ctx.beginPath();
             ctx.lineWidth = "3"; 
-            ctx.strokeStyle ="blue";
+            ctx.strokeStyle = "blue";
             ctx.rect(this.x, this.y, this.width, this.height);
             ctx.stroke();
         } 
-        if(this instanceof Bottles ) {
+        else if(this instanceof Bottles) {
             ctx.beginPath();
             ctx.lineWidth = "3"; 
-            ctx.strokeStyle ="green";
+            ctx.strokeStyle = "green";
             ctx.rect(this.x + 30, this.y + 10, 30, 60);
             ctx.stroke();
         } 
-        if(this instanceof Coin) {
+        else if(this instanceof Coin) {
             ctx.beginPath();
             ctx.lineWidth = "3"; 
-            ctx.strokeStyle ="green";
+            ctx.strokeStyle = "orange";
             ctx.rect(this.x + 45, this.y + 45, 30, 30);
             ctx.stroke();
         }
-        if(this instanceof Endboss) {
+        else if(this instanceof Endboss) {
             ctx.beginPath();
             ctx.lineWidth = "3"; 
-            ctx.strokeStyle ="red";
+            ctx.strokeStyle = "red";
             ctx.rect(this.x + 20, this.y + 60, this.width - 30, this.height - 60);
             ctx.stroke();
         }
-        if(this instanceof Character) {
+        else if(this instanceof Character) {
             ctx.beginPath();
             ctx.lineWidth = "3"; 
-            ctx.strokeStyle ="purple";
-            ctx.rect(this.x + 10, this.y, this.width - 20, this.height - 10);
+            ctx.strokeStyle = "purple";
+            ctx.rect(this.x + 10, this.y + 100, this.width - 20, this.height - 110);
+            ctx.stroke();
+        }
+        else if(this instanceof ThrowableObject) {
+            ctx.beginPath();
+            ctx.lineWidth = "3"; 
+            ctx.strokeStyle = "yellow";
+            ctx.rect(this.x, this.y, this.width, this.height);
             ctx.stroke();
         }
     }
 
-     /**
-     * 
-     * @param {Array} arr - ['img/image1.png', 'img/image2.png', ...]
-     */
     loadImages(arr) {
         arr.forEach((path) => {
             let img = new Image();
             img.src = path;
             this.imageCache[path] = img;
-        })
+        });
     }
 }
