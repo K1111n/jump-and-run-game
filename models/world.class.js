@@ -46,9 +46,7 @@ class World {
                     if(this.character.y + this.character.height - 15 > enemy.y) {
                         this.character.hit();
                         this.statusBar.setPercentage(this.character.energy);
-                        console.log('Character got hit');
                     } else if(this.character.y + this.character.height - 15 <= enemy.y) {
-                        console.log('Enemy dead');
                         this.level.enemies.splice(index, 1);
                     }
                 }
@@ -58,7 +56,6 @@ class World {
                     this.level.coins.splice(index, 1);
                     this.character.collectCoin();
                     this.coinBar.setPercentage(this.character.coins);
-                    console.log('Coin collected');
                 }
             });
         this.level.bottles.forEach((bottle, index) => {
@@ -66,7 +63,6 @@ class World {
                     this.level.bottles.splice(index, 1);
                     this.character.collectBottle();
                     this.bottleBar.setPercentage(this.character.bottles);
-                    console.log('Bottle collected');
                 }
             });
         this.throwableObjects.forEach((bottle, bottleIndex) => {
@@ -74,7 +70,6 @@ class World {
                     if(bottle.isColliding(enemy)) {
                         this.level.enemies.splice(enemyIndex, 1);
                         this.throwableObjects.splice(bottleIndex, 1);
-                        console.log('Enemy hit by bottle');
                     }
                 });
             });
