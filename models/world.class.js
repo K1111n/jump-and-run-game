@@ -74,7 +74,7 @@ class World {
                     if(bottle.isColliding(enemy)) {
                         if(enemy instanceof Endboss) {
                             enemy.hit();
-                            this.statusBarEndboss.setPercentage(enemy.energy / 25 * 100);
+                            this.statusBarEndboss.setPercentage(enemy.energy * 4);
                             if(enemy.isDead) {
                                 console.log('Endboss defeated');
                             }
