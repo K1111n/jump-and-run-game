@@ -45,7 +45,7 @@ class World {
     checkCollisions() {
         this.level.enemies.forEach((enemy, index) => {
                 if(this.character.isColliding(enemy) ) {
-                    if(this.character.speedY < 0 && this.character.y < enemy.y) {
+                    if(this.character.speedY < 0 && this.character.y + 230 < enemy.y) {
                         enemy.killEnemy();
                         this.character.jump();
                     } else {

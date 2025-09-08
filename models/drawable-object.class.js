@@ -55,7 +55,7 @@ class DrawableObject {
             ctx.beginPath();
             ctx.lineWidth = "3"; 
             ctx.strokeStyle = "purple";
-            ctx.rect(this.x + 10, this.y + 100, this.width - 20, this.height - 110);
+            ctx.rect(this.x + 10, this.y, this.width - 20, this.height - 15);
             ctx.stroke();
         }
         else if(this instanceof ThrowableObject) {
