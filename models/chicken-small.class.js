@@ -3,6 +3,7 @@ class ChickenSmall extends MovableObject {
     y = 360;
     height = 60;
     width = 50;
+    isDead = false;
     IMAGES_WALKING = [
             '../img/3_enemies_chicken/chicken_small/1_walk/1_w.png',
             '../img/3_enemies_chicken/chicken_small/1_walk/2_w.png',
@@ -25,14 +26,16 @@ class ChickenSmall extends MovableObject {
     }
 
     animate() {
-        setInterval( () => {   
-            if (!this.isDead()) {     
+        setInterval(() => {   
+            if (!this.isDead) {     
                 this.moveLeft();
-        }
-        }, 1000 / 60)
+            }
+        }, 1000 / 60);
         
         setInterval(() => {       
-            if (!this.isDead()) {  
+            if (this.isDead) {  
+                this.playAnimation(this.IMAGES_DEAD);
+            } else {
                 this.playAnimation(this.IMAGES_WALKING);
             }
         }, 200);
@@ -41,6 +44,8 @@ class ChickenSmall extends MovableObject {
     killEnemy() {
         this.isDead = true;
         this.speed = 0;
-        this.playAnimation(this.IMAGES_DEAD);
+        setTimeout(() => {
+            this.markedForRemoval = true;
+        }, 200);
     }
 }

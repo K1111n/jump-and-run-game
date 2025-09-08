@@ -46,7 +46,7 @@ class World {
         this.level.enemies.forEach((enemy, index) => {
                 if(this.character.isColliding(enemy) ) {
                     if(this.character.speedY < 0 && this.character.y < enemy.y) {
-                        this.level.enemies.splice(index, 1);
+                        enemy.killEnemy();
                         this.character.jump();
                     } else {
                         this.character.hit();
@@ -54,6 +54,7 @@ class World {
                     }
                 }
             });
+        this.level.enemies = this.level.enemies.filter(enemy => !enemy.markedForRemoval);
         this.level.coins.forEach((coin, index) => {
                 if(this.character.isColliding(coin)) {
                     this.level.coins.splice(index, 1);
@@ -78,7 +79,7 @@ class World {
                                 console.log('Endboss defeated');
                             }
                         } else {
-                            this.level.enemies.splice(enemyIndex, 1);
+                            enemy.killEnemy();
                         }
                         this.throwableObjects.splice(bottleIndex, 1);
                     }

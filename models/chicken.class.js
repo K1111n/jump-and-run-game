@@ -3,6 +3,7 @@ class Chicken extends MovableObject {
     y = 340;
     height = 90;
     width = 80;
+    isDead = false;
     IMAGES_WALKING = [
             '../img/3_enemies_chicken/chicken_normal/1_walk/1_w.png',
             '../img/3_enemies_chicken/chicken_normal/1_walk/2_w.png',
@@ -26,20 +27,27 @@ class Chicken extends MovableObject {
     }
 
     animate() {
-        this.moveInterval = setInterval(() => {
+        setInterval(() => {
             if (!this.isDead) {
                 this.moveLeft();
-                this.playAnimation(this.IMAGES_WALKING);
             }
         }, 1000 / 60);
+        
+        setInterval(() => {
+            if (this.isDead) {
+                this.playAnimation(this.IMAGES_DEAD);
+            } else {
+                this.playAnimation(this.IMAGES_WALKING);
+            }
+        }, 200);
     }
     
     killEnemy() {
         this.isDead = true;
         this.speed = 0;
-        clearInterval(this.moveInterval);
-        setInterval(() => {
-            this.playAnimation(this.IMAGES_DEAD);
+        // Entferne das Huhn nach der Animation (z.B. nach 1 Sekunde)
+        setTimeout(() => {
+            this.markedForRemoval = true;
         }, 200);
     }
 }
