@@ -5,6 +5,7 @@ class Character extends MovableObject {
     bottles = 0;
     lastMovement = new Date().getTime();
     deathAnimationComplete = false;
+    deathAnimationComplete = false;
     
     IMAGES_WALKING = [
         '../img/2_character_pepe/2_walk/W-21.png',
@@ -84,21 +85,23 @@ class Character extends MovableObject {
 
     animate() {
         setInterval(() => {
-            if(this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
-                this.moveRight();
-                this.otherDirection = false;
-                this.lastMovement = new Date().getTime();
-            }
+            if(!this.isDead()) {
+                if(this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
+                    this.moveRight();
+                    this.otherDirection = false;
+                    this.lastMovement = new Date().getTime();
+                }
 
-            if(this.world.keyboard.LEFT && this.x > 0) {
-                this.moveLeft();
-                this.otherDirection = true;
-                this.lastMovement = new Date().getTime();
-            }
+                if(this.world.keyboard.LEFT && this.x > 0) {
+                    this.moveLeft();
+                    this.otherDirection = true;
+                    this.lastMovement = new Date().getTime();
+                }
 
-            if(this.world.keyboard.UP && !this.isAboveGround()) {
-                this.jump();
-                this.lastMovement = new Date().getTime();
+                if(this.world.keyboard.UP && !this.isAboveGround()) {
+                    this.jump();
+                    this.lastMovement = new Date().getTime();
+                }
             }
 
             this.world.camera_x = -this.x + 100;
@@ -111,6 +114,7 @@ class Character extends MovableObject {
                     let i = this.currentImage % this.IMAGES_DEAD.length;
                     if(i === this.IMAGES_DEAD.length - 1) {
                         this.deathAnimationComplete = true;
+                        this.loadImage(this.IMAGES_DEAD[this.IMAGES_DEAD.length - 1]);
                     }
                 }
             } else if(this.isHurt()) {                
@@ -130,6 +134,40 @@ class Character extends MovableObject {
     isSleeping() {
         let timepassed = new Date().getTime() - this.lastMovement;
         timepassed = timepassed / 1000; 
-        return timepassed > 3; 
+        return timepassed > 5; 
+    }
+    
+    hit() {
+        this.energy -= 5;
+        if(this.energy <= 0) {
+            this.energy = 0;
+        } else {
+            this.lastHit = new Date().getTime();
+        }
+    }
+
+    isHurt() {
+        if(this.isDead()) return false;
+        let timepassed = new Date().getTime() - this.lastHit; 
+        timepassed = timepassed / 1000; 
+        return timepassed < 1;
+    }
+
+    isDead() {
+        return this.energy == 0;
+    }
+
+    collectCoin() {
+        this.coins++;
+        if(this.coins > 5) {
+            this.coins = 5; 
+        }
+    }
+
+    collectBottle() {
+        this.bottles++;
+        if(this.bottles > 5) {
+            this.bottles = 5;
+        }
     }
 }

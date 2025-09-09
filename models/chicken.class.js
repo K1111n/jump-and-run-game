@@ -45,7 +45,6 @@ class Chicken extends MovableObject {
     killEnemy() {
         this.isDead = true;
         this.speed = 0;
-        // Entferne das Huhn nach der Animation (z.B. nach 1 Sekunde)
         setTimeout(() => {
             this.markedForRemoval = true;
         }, 200);

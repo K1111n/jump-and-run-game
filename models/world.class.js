@@ -43,48 +43,66 @@ class World {
     }
 
     checkCollisions() {
-        this.level.enemies.forEach((enemy, index) => {
-                if(this.character.isColliding(enemy) ) {
-                    if(this.character.speedY < 0 && this.character.y + 230 < enemy.y) {
-                        enemy.killEnemy();
-                        this.character.jump();
+        if(!this.character.isDead()) {
+            this.level.enemies.forEach((enemy) => {
+                if(this.character.isColliding(enemy)) {
+                    if(enemy instanceof ChickenSmall) {
+                        if(this.character.speedY < 0 && this.character.y + 207 < enemy.y) {
+                            enemy.killEnemy();
+                            this.character.jump();
+                        } else {
+                            this.character.hit();
+                            this.statusBar.setPercentage(this.character.energy);
+                        }
                     } else {
-                        this.character.hit();
-                        this.statusBar.setPercentage(this.character.energy);
+                        if(this.character.speedY < 0 && this.character.y + 200 < enemy.y) {
+                            enemy.killEnemy();
+                            this.character.jump();
+                        } else {
+                            this.character.hit();
+                            this.statusBar.setPercentage(this.character.energy);
+                        }
                     }
                 }
             });
+        }
+    
         this.level.enemies = this.level.enemies.filter(enemy => !enemy.markedForRemoval);
-        this.level.coins.forEach((coin, index) => {
+        
+        if(!this.character.isDead()) {
+            this.level.coins.forEach((coin, index) => {
                 if(this.character.isColliding(coin)) {
                     this.level.coins.splice(index, 1);
                     this.character.collectCoin();
                     this.coinBar.setPercentage(this.character.coins);
                 }
             });
-        this.level.bottles.forEach((bottle, index) => {
+    
+            this.level.bottles.forEach((bottle, index) => {
                 if(this.character.isColliding(bottle)) {
                     this.level.bottles.splice(index, 1);
                     this.character.collectBottle();
                     this.bottleBar.setPercentage(this.character.bottles);
                 }
             });
+        }
+        
         this.throwableObjects.forEach((bottle, bottleIndex) => {
-                this.level.enemies.forEach((enemy, enemyIndex) => {
-                    if(bottle.isColliding(enemy)) {
-                        if(enemy instanceof Endboss) {
-                            enemy.hit();
-                            this.statusBarEndboss.setPercentage(enemy.energy * 4);
-                            if(enemy.isDead) {
-                                console.log('Endboss defeated');
-                            }
-                        } else {
-                            enemy.killEnemy();
+            this.level.enemies.forEach((enemy, enemyIndex) => {
+                if(bottle.isColliding(enemy)) {
+                    if(enemy instanceof Endboss) {
+                        enemy.hit();
+                        this.statusBarEndboss.setPercentage(enemy.energy * 4);
+                        if(enemy.isDead) {
+                            console.log('Endboss defeated');
                         }
-                        this.throwableObjects.splice(bottleIndex, 1);
+                    } else {
+                        enemy.killEnemy();
                     }
-                });
+                    this.throwableObjects.splice(bottleIndex, 1);
+                }
             });
+        });
     }
 
     draw() {
@@ -128,7 +146,7 @@ class World {
         }
 
         mo.draw(this.ctx);
-        mo.drawFrame(this.ctx);
+        // mo.drawFrame(this.ctx);
 
         if(mo.otherDirection) {
             this.flipImageBack(mo);

@@ -82,9 +82,7 @@ class Endboss extends MovableObject {
     }
 
     hit() {
-        if (this.isDead) {
-            this.playAnimation(this.IMAGES_DEAD);
-        };
+        if (this.isDead) return; 
         
         this.energy -= 5;
         this.isHurtAnimation = true;
@@ -97,7 +95,9 @@ class Endboss extends MovableObject {
             this.energy = 0;
             this.isDead = true;
             this.speed = 0;
-            console.log('Endboss defeated!');
+            setTimeout(() => {
+                this.markedForRemoval = true;
+            }, 2000);
         }
     }
 }

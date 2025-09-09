@@ -1,4 +1,4 @@
-class StartScreen extends DrawableObject {
+class EndScreen extends DrawableObject {
     width = 720;
     height = 480;
 
@@ -11,7 +11,8 @@ class StartScreen extends DrawableObject {
     }
 
     IMAGES = [
-        '../img/9_intro_outro_screens/start/startscreen_2.png'
+        '../img/You won, you lost/You won A.png',
+        '../img/You won, you lost/You lost b.png'
     ];
 
     draw() {
