@@ -10,8 +10,6 @@
     <script src="/models/drawable-object.class.js"></script>
     <script src="/models/movable-object.class.js"></script>
     <script src="/models/character.class.js"></script>
-    <script src="/models/startScreen.class.js"></script>
-    <script src="/models/endScreen.class.js"></script>
     <script src="/models/chicken.class.js"></script>
     <script src="/models/coin.class.js"></script>
     <script src="/models/bottles.class.js"></script>
@@ -38,6 +36,36 @@
     <canvas width="720" height="480" id="canvas">
 
     </canvas>
+
+    <dialog id="startDialog">
+        <div class="dialog-content">
+            <img src="../img/9_intro_outro_screens/start/startscreen_2.png" alt="Start Screen" class="dialog-image">
+            <div class="overlay-content">
+                <div class="controls-info">
+                    <p>⬅️ ➡️ Bewegen | ⬆️ Springen | LEERTASTE Flasche werfen</p>
+                </div>
+                <button class="game-button start-button" onclick="startGame()">ENTER - Spiel starten</button>
+            </div>
+        </div>
+    </dialog>
+
+    <dialog id="winDialog">
+        <div class="dialog-content">
+            <img src="../img/You won, you lost/You won A.png" alt="You Won" class="dialog-image">
+            <div class="overlay-content">
+                <button class="game-button restart-button" onclick="restartGame()">Play again</button>
+            </div>
+        </div>
+    </dialog>
+
+    <dialog id="loseDialog">
+        <div class="dialog-content">
+            <img src="../img/You won, you lost/You lost b.png" alt="Game Over" class="dialog-image">
+            <div class="overlay-content">
+                <button class="game-button restart-button" onclick="restartGame()">Try again</button>
+            </div>
+        </div>
+    </dialog>
 
 </body>
 

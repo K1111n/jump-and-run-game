@@ -25,3 +25,89 @@ h1 {
     letter-spacing: 3px;
     text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
 }
+
+dialog {
+    border: none;
+    border-radius: 15px;
+    padding: 0;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.8);
+    background: transparent;
+}
+
+dialog::backdrop {
+    background: rgba(0, 0, 0, 0.7);
+}
+
+.dialog-content {
+    position: relative;
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.dialog-image {
+    display: block;
+    width: 720px;
+    height: 480px;
+    object-fit: cover;
+}
+
+.overlay-content {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+    color: white;
+    padding: 30px;
+    text-align: center;
+}
+
+.controls-info {
+    background: rgba(0,0,0,0.7);
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    display: inline-block;
+}
+
+.controls-info p {
+    margin: 5px 0;
+    font-size: 14px;
+    font-family: Arial, sans-serif;
+}
+
+.game-button {
+    background: #f5576c;
+    color: white;
+    border: none;
+    padding: 15px 40px;
+    font-size: 1.2em;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: bold;
+    margin: 10px;
+    font-family: zabras, Arial, sans-serif;
+}
+
+.game-button:hover {
+    transform: scale(1.1);
+    box-shadow: 0 5px 20px rgba(255,255,255,0.3);
+}
+
+.start-button {
+    background: #4CAF50;
+}
+
+.start-button:hover {
+    background: #45a049;
+}
+
+.restart-button {
+    background: #2196F3;
+}
+
+.restart-button:hover {
+    background: #0b7dda;
+}
+
