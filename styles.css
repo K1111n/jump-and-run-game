@@ -32,6 +32,7 @@ dialog {
     padding: 0;
     box-shadow: 0 20px 60px rgba(0,0,0,0.8);
     background: transparent;
+    margin-bottom: 150px;
 }
 
 dialog::backdrop {
@@ -87,7 +88,7 @@ dialog::backdrop {
     transition: all 0.3s ease;
     font-weight: bold;
     margin: 10px;
-    font-family: zabras, Arial, sans-serif;
+    font-family: Arial, sans-serif;
 }
 
 .game-button:hover {
