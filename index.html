@@ -40,33 +40,48 @@
     <dialog id="startDialog">
         <div class="dialog-content">
             <img src="../img/9_intro_outro_screens/start/startscreen_2.png" alt="Start Screen" class="dialog-image">
-            <div class="overlay-content">
-                <div class="controls-info">
-                    <p>⬅️ ➡️ MOVE | ⬆️ JUMP | SPACE Throw Bottle</p>
-                </div>
-                <button class="game-button start-button" onclick="startGame()">ENTER - Spiel starten</button>
+            <div class="overlay-content" style="display:flex;">
+                <button class="game-button" style="background: #FF9800;" onclick="showControls()">Controls</button>
+                <button class="game-button start-button" onclick="startGame()">ENTER/Start Game</button>
+                <button class="game-button" style="background: #9C27B0;" onclick="window.open('impressum.html', '_blank')">Impressum</button>
+            </div>
+        </div>
+    </dialog>
+
+    <dialog id="controlsDialog">
+        <div class="dialog-content" style="background: #2c3e50; padding: 40px; border-radius: 15px; min-width: 400px;">
+            <h2 style="color: white; margin-bottom: 30px; font-family: Arial, sans-serif; text-align: center;">CONTROLS</h2>
+            <div style="color: white; font-size: 18px; line-height: 2;">
+                <p>⬅️  - Move Left</p>
+                <p>➡️ - Move Right</p>
+                <p>⬆️ - Jump</p>
+                <p>SPACEBAR - Throw</p>
+                <p>F - Fullscreen</p>
+            </div>
+            <div style="text-align: center; margin-top: 30px;">
+                <button class="game-button" style="background: #607D8B;" onclick="closeControls()">Back</button>
             </div>
         </div>
     </dialog>
 
     <dialog id="winDialog">
         <div class="dialog-content">
-            <img src="../img/You won, you lost/You won A.png" alt="You Won" class="dialog-image">
+            <img src="../img/You won, you lost/You won A.png" alt="You Won" class="dialog-image" style="height: 475px; width: 720px;">
             <div class="overlay-content">
-                <button class="game-button restart-button" onclick="restartGame()">Play again</button>
+                <button class="game-button restart-button" onclick="restartGame()">ENTER - Play again</button>
             </div>
         </div>
     </dialog>
 
     <dialog id="loseDialog">
         <div class="dialog-content">
-            <img src="../img/You won, you lost/You lost b.png" alt="Game Over" class="dialog-image">
+            <img src="../img/You won, you lost/You lost b.png" alt="Game Over" class="dialog-image" style="max-width: 100%; max-height: 100%; object-fit: contain;">
             <div class="overlay-content">
-                <button class="game-button restart-button" onclick="restartGame()">Try again</button>
+                <button class="game-button restart-button" onclick="restartGame()">ENTER - Try again</button>
             </div>
         </div>
     </dialog>
 
-</body>
+    </body>
 
 </html>

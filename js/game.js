@@ -9,6 +9,7 @@ let statusInterval;
 let startDialog;
 let winDialog;
 let loseDialog;
+let controlsDialog;
 
 function init() {
     canvas = document.getElementById("canvas");
@@ -17,15 +18,33 @@ function init() {
     startDialog = document.getElementById('startDialog');
     winDialog = document.getElementById('winDialog');
     loseDialog = document.getElementById('loseDialog');
+    controlsDialog = document.getElementById('controlsDialog');
     
-    startDialog.showModal();
+    if (startDialog) {
+        startDialog.showModal();
+    }
     
     window.addEventListener('keydown', handleEnterStart);
+}
+function showControls() {
+    controlsDialog.showModal();
+}
+
+function closeControls() {
+    controlsDialog.close();
 }
 
 function handleEnterStart(event) {
     if (event.key === "Enter" && !gameStarted) {
-        startGame();
+        if (controlsDialog && controlsDialog.open) {
+            closeControls();
+        } 
+        else if (startDialog && startDialog.open) {
+            startGame();
+        }
+        else if ((winDialog && winDialog.open) || (loseDialog && loseDialog.open)) {
+            restartGame();
+        }
     }
 }
 
@@ -138,7 +157,7 @@ window.addEventListener('keyup', (event) => {
 });
 
 document.addEventListener("keydown", (event) => {
-    if (event.key === "F11") {
+    if (event.key === "F" || event.key === "f") {
         event.preventDefault();
         if (document.fullscreenElement) {
             document.exitFullscreen();

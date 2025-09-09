@@ -1,6 +1,6 @@
 class ChickenSmall extends MovableObject {
 
-    y = 350;
+    y = 360;
     height = 60;
     width = 50;
     isDead = false;
