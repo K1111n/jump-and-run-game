@@ -54,10 +54,9 @@ dialog::backdrop {
 
 .overlay-content {
     position: absolute;
-    bottom: 0;
+    top: 0;
     left: 0;
     right: 0;
-    background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
     color: white;
     padding: 30px;
     text-align: center;
