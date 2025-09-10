@@ -40,6 +40,9 @@ class MovableObject extends DrawableObject {
             this.energy = 0;
         } else {
             this.lastHit = new Date().getTime();
+            if (window.soundManager) {
+                window.soundManager.play('hurt');
+            }
         }
     }
 
