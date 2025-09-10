@@ -26,6 +26,7 @@
     <script src="/models/throwable-object.class.js"></script>
     <script src="/models/endboss.class.js"></script>
     <script src="/models/sound.class.js"></script>
+    <script src="/models/controller.class.js"></script>
     <script src="/levels/level1.js"></script>
     <script src="/js/game.js"></script>
 </head>
@@ -37,6 +38,7 @@
     <section>
         <button class="responsiveButton">Responsive Design</button>
         <button class="desktopButton">Desktop Design</button>
+        <button id="mute-btn" class="mute-button">🔊</button>
     </section>
 
     <canvas width="720" height="480" id="canvas">
@@ -51,6 +53,23 @@
                 <button class="game-button" style="background: #FF9800;" onclick="showControls()">Controls</button>
                 <button class="game-button" style="background: #9C27B0;"><a href="" target="_blank" style="text-decoration: none;">Impressum</a></button>
             </div>
+        </div>
+    </dialog>
+
+    <div id="mobile-controls">
+        <div class="control-pad">
+            <button class="control-btn" id="left-btn">←</button>
+            <button class="control-btn" id="right-btn">→</button>
+            <button class="control-btn" id="jump-btn">↑</button>
+            <button class="control-btn" id="throw-btn">🍾</button>
+        </div>
+    </div>
+
+    <dialog id="pauseDialog">
+        <div class="dialog-content" style="padding: 40px; background: #2c3e50; border-radius: 15px;">
+            <h2 style="color: white; margin-bottom: 20px;">GAME PAUSED</h2>
+            <button class="game-button" id="resume-btn">Resume</button>
+            <button class="game-button" id="quit-btn" style="background: #F44336;">Quit to Menu</button>
         </div>
     </dialog>
 
@@ -87,6 +106,14 @@
             </div>
         </div>
     </dialog>
+
+    <div id="game-sounds" style="display: none;">
+        <audio id="sound-jump" src="../sounds/jump.mp3" preload="auto"></audio>
+        <audio id="sound-hurt" src="../sounds/hurt.mp3" preload="auto"></audio>
+        <audio id="sound-enemyDefeated" src="../sounds/enemyDefeated.mp3" preload="auto"></audio>
+        <audio id="sound-youwin" src="../sounds/youwin.mp3" preload="auto"></audio>
+        <audio id="sound-youlost" src="../sounds/youlost.mp3" preload="auto"></audio>
+    </div>
 
     </body>
 

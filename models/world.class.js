@@ -49,17 +49,35 @@ class World {
                     if(enemy instanceof ChickenSmall) {
                         if(this.character.speedY < 0 && this.character.y + 207 < enemy.y) {
                             enemy.killEnemy();
+                            if (soundManager) {
+                                soundManager.play('enemyDefeated');
+                            }
                             this.character.jump();
+                            if (soundManager) {
+                                soundManager.play('jump');
+                            }
                         } else {
                             this.character.hit();
+                            if (soundManager) {
+                                soundManager.play('hurt');
+                            }                            
                             this.statusBar.setPercentage(this.character.energy);
                         }
                     } else {
                         if(this.character.speedY < 0 && this.character.y + 200 < enemy.y) {
                             enemy.killEnemy();
+                            if (soundManager) {
+                                soundManager.play('enemyDefeated');
+                            }
                             this.character.jump();
+                            if (soundManager) {
+                                soundManager.play('jump');
+                            }
                         } else {
                             this.character.hit();
+                            if (soundManager) {
+                                soundManager.play('hurt');
+                            }
                             this.statusBar.setPercentage(this.character.energy);
                         }
                     }

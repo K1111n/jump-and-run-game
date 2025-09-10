@@ -1,11 +1,11 @@
 class Sounds {
     constructor() {
         this.sounds = {
-            jump: new Audio('../sounds/jump.mp3'),
-            hurt: new Audio('../sounds/hurt.mp3'),
-            enemyDefeated: new Audio('../sounds/enemyDefeated.mp3'),
-            youlost: new Audio('../sounds/youlost.mp3'),
-            youwon: new Audio('../sounds/youwon.mp3'),
+            jump: document.getElementById('sound-jump'),
+            hurt: document.getElementById('sound-hurt'),
+            enemyDefeated: document.getElementById('sound-enemyDefeated'),
+            youwin: document.getElementById('sound-youwin'),
+            youlost: document.getElementById('sound-youlost'),
         }
 
     this.muted = false;
