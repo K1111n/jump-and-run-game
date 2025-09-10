@@ -5,7 +5,6 @@ class Character extends MovableObject {
     bottles = 0;
     lastMovement = new Date().getTime();
     deathAnimationComplete = false;
-    deathAnimationComplete = false;
     
     IMAGES_WALKING = [
         '../img/2_character_pepe/2_walk/W-21.png',

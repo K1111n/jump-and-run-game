@@ -156,15 +156,15 @@ window.addEventListener('keyup', (event) => {
     }
 });
 
-document.addEventListener("keydown", (event) => {
-    if (event.key === "F" || event.key === "f") {
-        event.preventDefault();
-        if (document.fullscreenElement) {
-            document.exitFullscreen();
-        } else {
-            canvas.requestFullscreen().catch((err) => {
-                console.error(`Error enabling fullscreen: ${err.message}`);
-            });
-        }
-    }
-});
+// document.addEventListener("keydown", (event) => {
+//     if (event.key === "F" || event.key === "f") {
+//         event.preventDefault();
+//         if (document.fullscreenElement) {
+//             document.exitFullscreen();
+//         } else {
+//             canvas.requestFullscreen().catch((err) => {
+//                 console.error(`Error enabling fullscreen: ${err.message}`);
+//             });
+//         }
+//     }
+// });
