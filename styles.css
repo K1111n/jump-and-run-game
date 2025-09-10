@@ -111,3 +111,26 @@ dialog::backdrop {
     background: #0b7dda;
 }
 
+@media(hover: none) and (orientation: portrait) {
+
+    .responsiveButton {
+        display: block;
+    }
+
+    .desktopButton {
+        display: none;
+    }
+    
+}
+
+@media(hover: none) and (orientation: landscape) {
+
+    .responsiveButton {
+        display: none;
+    }
+
+    .desktopButton {
+        display: block;
+    }
+
+}
