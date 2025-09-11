@@ -33,13 +33,17 @@ class World {
     }
 
     checkThrowObjects() {
-        if(this.keyboard.SPACE && this.character.bottles > 0) {
+        if(this.keyboard.SPACE && this.character.bottles > 0 && !this.bottleThrown) {
             let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
             this.throwableObjects.push(bottle);
             this.character.bottles--;
             this.bottleBar.setPercentage(this.character.bottles);
-        }
 
+            this.bottleThrown = true;
+        setTimeout(() => {
+            this.bottleThrown = false;
+            }, 500);
+        }
     }
 
     checkCollisions() {
@@ -49,7 +53,8 @@ class World {
                     let characterBox = this.character.getHitbox();
                     let enemyBox = enemy.getHitbox();
                     let isJumpingOnEnemy = this.character.speedY < 0 && 
-                                           (characterBox.y + characterBox.height - 40) < enemyBox.y;
+                       this.character.isAboveGround() &&
+                       (characterBox.y + characterBox.height) < (enemyBox.y + 20);
                     
                     if(isJumpingOnEnemy) {
                         enemy.killEnemy();
@@ -96,7 +101,7 @@ class World {
                 if(bottle.isColliding(enemy) && !enemy.isDead) {
                     if(enemy instanceof Endboss) {
                         enemy.hit();
-                        this.statusBarEndboss.setPercentage(enemy.energy * 4);
+                        this.statusBarEndboss.setPercentage((enemy.energy / 25) * 100);
                         if (soundManager) {
                             soundManager.play('hurt');
                         }
@@ -159,7 +164,6 @@ class World {
         }
 
         mo.draw(this.ctx);
-        mo.drawFrame(this.ctx);
 
         if(mo.otherDirection) {
             this.flipImageBack(mo);
