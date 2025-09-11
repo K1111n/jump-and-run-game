@@ -68,6 +68,9 @@ function startGame() {
     startDialog.close();
     gameStarted = true;
     gameEnded = false;
+    if (soundManager) {
+        soundManager.startBackgroundMusic();
+    }
     initGame();
 }
 
@@ -101,12 +104,17 @@ function checkGameStatus() {
 
 function showEndDialog(won) {
     if (world) {
-        if (won) {
-            winDialog.showModal();
-        } else {
-            loseDialog.showModal();
+        if (soundManager) {
+            soundManager.stopBackgroundMusic();
+            if (won) {
+                winDialog.showModal();
+                soundManager.play('youwon');
+            } else {
+                loseDialog.showModal();
+                soundManager.play('youlost');
+            }
+            world = null;
         }
-        world = null;
     }
 }
 
@@ -114,6 +122,9 @@ function restartGame() {
     winDialog.close();
     loseDialog.close();
     
+    if (soundManager) {
+        soundManager.stopBackgroundMusic();
+    }
     gameStarted = false;
     gameEnded = false;
     keyboard = new Keyboard();

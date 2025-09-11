@@ -40,7 +40,9 @@ class Controller {
         if (this.pauseDialog) {
             this.pauseDialog.showModal();
         }
-        
+        if (window.soundManager) {
+            window.soundManager.pauseBackgroundMusic();
+        }
         if (world) {
             world.pauseTime = Date.now();
         }
@@ -50,6 +52,10 @@ class Controller {
         this.isPaused = false;
         if (this.pauseDialog) {
             this.pauseDialog.close();
+        }
+
+        if (window.soundManager) {
+            window.soundManager.resumeBackgroundMusic();
         }
 
         if (world && world.pauseTime) {
@@ -67,6 +73,9 @@ class Controller {
             this.pauseDialog.close();
         }
         this.isPaused = false;
+        if (window.soundManager) {
+            window.soundManager.stopBackgroundMusic();
+        }
         restartGame();
     }
 }

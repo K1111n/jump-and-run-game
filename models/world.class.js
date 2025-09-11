@@ -111,12 +111,19 @@ class World {
                     if(enemy instanceof Endboss) {
                         enemy.hit();
                         this.statusBarEndboss.setPercentage(enemy.energy * 4);
+                        if (window.soundManager) {
+                            window.soundManager.play('hurt');
+                        }
                         if(enemy.isDead) {
                             console.log('Endboss defeated');
                         }
                     } else {
                         enemy.killEnemy();
+                        if (window.soundManager) {
+                            window.soundManager.play('enemyDefeated');
+                        }
                     }
+                    bottle.splashBottle();
                     this.throwableObjects.splice(bottleIndex, 1);
                 }
             });
