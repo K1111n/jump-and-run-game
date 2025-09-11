@@ -1,9 +1,35 @@
+/**
+ * Player character class
+ */
 class Character extends MovableObject {
+    /**
+     * @type {number} Character height in pixels
+     */
     height = 280;
+
+    /**
+     * @type {number} Y position
+     */
     y = 150;
+
+    /**
+     * @type {number} Number of collected coins
+     */
     coins = 0;
+
+    /**
+     * @type {number} Number of collected bottles
+     */
     bottles = 0;
+
+    /**
+     * @type {number} Timestamp of last movement
+     */
     lastMovement = new Date().getTime();
+
+    /**
+     * @type {boolean} Indicates if death animation is complete
+     */
     deathAnimationComplete = false;
     
     IMAGES_WALKING = [
@@ -67,9 +93,19 @@ class Character extends MovableObject {
         '/img/2_character_pepe/1_idle/long_idle/I-20.png',
     ];
 
+    /**
+     * @type {World} Reference to the game world
+     */
     world;
+
+    /**
+     * @type {number} Movement speed
+     */
     speed = 7;
 
+    /**
+     * creates a new player character
+     */
     constructor() {
         super().loadImage('/img/2_character_pepe/2_walk/W-21.png');
         this.loadImages(this.IMAGES_WALKING);
@@ -82,6 +118,9 @@ class Character extends MovableObject {
         this.animate();
     }
 
+    /**
+     * starts character animations
+     */
     animate() {
         setInterval(() => {
             if(!this.isDead()) {
@@ -130,12 +169,19 @@ class Character extends MovableObject {
         }, 100);
     }
 
+    /**
+     * checks if character is sleeping (after 10 seconds of inactivity)
+     * @returns {boolean} True if sleeping
+     */
     isSleeping() {
         let timepassed = new Date().getTime() - this.lastMovement;
         timepassed = timepassed / 1000; 
         return timepassed > 10; 
     }
     
+    /**
+     * processes a hit on the character
+     */
     hit() {
         this.energy -= 5;
         if(this.energy <= 0) {
@@ -145,6 +191,10 @@ class Character extends MovableObject {
         }
     }
 
+    /**
+     * checks if the character is hurt
+     * @returns {boolean} True if recently hurt
+     */
     isHurt() {
         if(this.isDead()) return false;
         let timepassed = new Date().getTime() - this.lastHit; 
@@ -152,10 +202,17 @@ class Character extends MovableObject {
         return timepassed < 1;
     }
 
+    /**
+     * checks if the character is dead
+     * @returns {boolean} True if dead
+     */
     isDead() {
         return this.energy == 0;
     }
 
+    /**
+     * collects a coin, up to a maximum of 5
+     */
     collectCoin() {
         this.coins++;
         if(this.coins > 5) {
@@ -163,6 +220,9 @@ class Character extends MovableObject {
         }
     }
 
+    /**
+     * collects a bottle, up to a maximum of 5  
+     */
     collectBottle() {
         this.bottles++;
         if(this.bottles > 5) {
