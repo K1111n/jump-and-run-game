@@ -52,9 +52,9 @@ class World {
                 if(this.character.isColliding(enemy) && !enemy.isDead) {
                     let characterBox = this.character.getHitbox();
                     let enemyBox = enemy.getHitbox();
-                    let isJumpingOnEnemy = this.character.speedY < 0 && 
-                       this.character.isAboveGround() &&
-                       (characterBox.y + characterBox.height) < (enemyBox.y + 20);
+                    
+                    let isJumpingOnEnemy = this.character.speedY > 0 &&
+                       this.character.y < enemy.y - 20;
                     
                     if(isJumpingOnEnemy) {
                         enemy.killEnemy();
@@ -101,13 +101,7 @@ class World {
                 if(bottle.isColliding(enemy) && !enemy.isDead) {
                     if(enemy instanceof Endboss) {
                         enemy.hit();
-                        this.statusBarEndboss.setPercentage((enemy.energy / 25) * 100);
-                        if (soundManager) {
-                            soundManager.play('hurt');
-                        }
-                        if(enemy.isDead) {
-                            console.log('Endboss defeated');
-                        }
+                        this.statusBarEndboss.setPercentage(enemy.energy);
                     } else {
                         enemy.killEnemy();
                         if (soundManager) {

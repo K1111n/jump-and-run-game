@@ -27,66 +27,58 @@ class DrawableObject {
     getHitbox() {
         if(this instanceof Character) {
             return {
-                x: this.x + 10,
-                y: this.y,
-                width: this.width - 20,
-                height: this.height - 15,
+                x: this.x + 20, 
+                y: this.y + 80,  
+                width: this.width - 40,  
+                height: this.height - 90,  
             };
         }
         else if(this instanceof Chicken) {
             return {
-                x: this.x,
-                y: this.y,
-                width: this.width,
-                height: this.height,
+                x: this.x + 5,
+                y: this.y + 5,
+                width: this.width - 10,
+                height: this.height - 10,
             };
         }
         else if(this instanceof ChickenSmall) {
             return {
                 x: this.x + 5,
-                y: this.y + 10,
+                y: this.y + 5,
                 width: this.width - 10,
-                height: this.height - 15,
+                height: this.height - 10,
             };
         }
         else if(this instanceof Endboss) {
             return {
                 x: this.x + 20,
                 y: this.y + 60,
-                width: this.width - 30,
-                height: this.height - 60,
+                width: this.width - 40,
+                height: this.height - 70,
             };
         }
         else if(this instanceof Bottles) {
             return {
-                x: this.x + 20,
-                y: this.y,
-                width: 40,
-                height: 70,
+                x: this.x + 35,  
+                y: this.y + 15,   
+                width: 30,        
+                height: 60,       
             };
         }
         else if(this instanceof Coin) {
             return {
-                x: this.x + 30,
-                y: this.y + 30,
-                width: 60,
-                height: 60,
+                x: this.x + 40,   
+                y: this.y + 40,   
+                width: 40,        
+                height: 40,       
             };
         }
         else if(this instanceof ThrowableObject) {
             return {
-                x: this.x,
-                y: this.y,
-                width: this.width,
-                height: this.height,
-            };
-        }
-        else {
-            return {
-                x: this.x,
-                y: this.y,
-                width: this.width,
-                height: this.height,
+                x: this.x + 10,
+                y: this.y + 10,
+                width: this.width - 20,
+                height: this.height - 20,
             };
         }
     }

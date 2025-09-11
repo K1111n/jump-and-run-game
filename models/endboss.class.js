@@ -2,7 +2,7 @@ class Endboss extends MovableObject {
     height = 400;
     width = 250;
     y = 55;
-    energy = 25; 
+    energy = 50; 
     isDead = false;
     isHurtAnimation = false;
 
