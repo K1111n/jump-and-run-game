@@ -375,26 +375,48 @@ function checkOrientation() {
     const orientationMsg = document.getElementById('orientation-message');
     const mobileControls = document.getElementById('mobile-controls');
     const canvas = document.getElementById('canvas');
+    const title = document.querySelector('h1');
     
-    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth <= 1023;
     
     if(isMobile) {
         if(window.innerHeight > window.innerWidth) {
             if(orientationMsg) orientationMsg.style.display = 'flex';
             if(canvas) canvas.style.display = 'none';
             if(mobileControls) mobileControls.style.display = 'none';
+            if(title) title.style.display = 'block';
         } else {
             if(orientationMsg) orientationMsg.style.display = 'none';
-            if(canvas) canvas.style.display = 'block';
+            if(canvas) {
+                canvas.style.display = 'block';
+                canvas.style.width = '100vw';
+                canvas.style.height = '100vh';
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            }
             if(mobileControls) mobileControls.style.display = 'block';
+            if(title) title.style.display = 'none';
+            
+            document.body.style.overflow = 'hidden';
         }
     } else {
         if(orientationMsg) orientationMsg.style.display = 'none';
         if(mobileControls) mobileControls.style.display = 'none';
+        if(canvas) {
+            canvas.style.display = 'block';
+            canvas.style.width = '720px';
+            canvas.style.height = '480px';
+            canvas.width = 720;
+            canvas.height = 480;
+        }
+        if(title) title.style.display = 'block';
+        document.body.style.overflow = 'visible';
     }
 }
 
-window.addEventListener('orientationchange', checkOrientation);
+window.addEventListener('orientationchange', () => {
+    setTimeout(checkOrientation, 100); 
+});
 window.addEventListener('resize', checkOrientation);
 
 /**
