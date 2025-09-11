@@ -1,17 +1,68 @@
+/**
+ * Main class that manages the game world, including character, level, and interactions.
+ */
 class World {
 
+    /**
+     * @type {Character} The player of the game.
+     */
     character = new Character();
+
+    /**
+     * @type {Level} Current level 
+     */
     level = level1;
+
+    /**
+     * @type {HTMLCanvasElement} Canvas element
+     */
     canvas;
+
+    /**
+     * @type {CanvasRenderingContext2D} Rendering context
+     */
     ctx;
+
+    /**
+     * @type {Keyboard} Keyboard handler
+     */
     keyboard;
+
+    /**
+     * @type {number} Camera X position
+     */
     camera_x = 0;
+
+    /**
+     * @type {StatusBar} Health bar
+     */
     statusBar = new StatusBar();
+
+    /**
+     * @type {CoinBar} Coin bar
+     */
     coinBar = new CoinBar();
+
+    /**
+     * @type {BottleBar} Bottle bar
+     */
     bottleBar = new BottleBar();
+
+    /**
+     * @type {StatusBarEndboss} Endboss health bar
+     */
     statusBarEndboss = new StatusBarEndboss();
+
+    /**
+     * @type {ThrowableObject[]} Array of thrown objects
+     */
     throwableObjects = [];
 
+    /**
+     * Creates a new game world
+     * @param {HTMLCanvasElement} canvas - Canvas element
+     * @param {Keyboard} keyboard - Keyboard handler
+     */
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
         this.canvas = canvas;
@@ -21,10 +72,16 @@ class World {
         this.run();
     }
 
+    /**
+     * sets the world for the character
+     */
     setWorld() {
         this.character.world = this;
     }
   
+    /**
+     * Starts the game logic loop
+     */
     run() {
         setInterval(() => {
             this.checkCollisions();
@@ -32,6 +89,9 @@ class World {
         }, 200)
     }
 
+    /**
+     * checks if bottles are thrown
+     */
     checkThrowObjects() {
         if(this.keyboard.SPACE && this.character.bottles > 0 && !this.bottleThrown) {
             let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
@@ -46,6 +106,9 @@ class World {
         }
     }
 
+    /**
+     * checks all collisions between character, enemies, coins and bottles
+     */
     checkCollisions() {
         if(!this.character.isDead()) {
             let enemiesToDefeat = [];
@@ -132,7 +195,7 @@ class World {
                 if(bottle.isColliding(enemy) && !enemy.isDead && !bottle.bottleSplash) {
                     if(enemy instanceof Endboss) {
                         enemy.hit();
-                        this.statusBarEndboss.setPercentage(enemy.energy);
+                        this.statusBarEndboss.setPercentage(enemy.energy * 4);
                         if (soundManager) {
                             soundManager.play('hurt');
                         }
@@ -160,6 +223,9 @@ class World {
         }, 500);
     }
 
+    /**
+     * main draw method
+     */
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
@@ -189,12 +255,20 @@ class World {
         });
     }
 
+    /**
+     * adds multiple objects to the map
+     * @param {DrawableObject} objects - Array of drawable objects
+     */
     addObjectsToMap(objects) {
         objects.forEach(o => {
             this.addToMap(o);
         })
     }
 
+    /**
+     * adds a single object to the map
+     * @param {DrawableObject} mo - Drawable object
+     */
     addToMap(mo) {
         if(mo.otherDirection) {
             this.flipImage(mo);
@@ -207,6 +281,10 @@ class World {
         }
     }
 
+    /**
+     * flips an image horizontally
+     * @param {DrawableObject} mo - Object to flip
+     */
     flipImage(mo) {
         this.ctx.save();
         this.ctx.translate(mo.width , 0);
@@ -214,6 +292,10 @@ class World {
         mo.x = mo.x * -1;
     }
 
+    /**
+     * restores a flipped image
+     * @param {DrawableObject} mo - Object to restore
+     */
     flipImageBack(mo) {
         mo.x = mo.x * -1;
         this.ctx.restore();

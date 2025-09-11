@@ -1,0 +1,61 @@
+/**
+ * Shows the controls dialog
+ */
+function showControls() {
+    controlsDialog.showModal();
+}
+
+/**
+ * Closes the controls dialog
+ */
+function closeControls() {
+    controlsDialog.close();
+}
+
+/**
+ * displays the end game dialog based on win/loss
+ * @param {boolean} won 
+ */
+function showEndDialog(won) {
+    if (world) {
+        world = null;
+    }
+    if (soundManager) {
+        soundManager.stopBackgroundMusic();
+        if (won) {
+            winDialog.showModal();
+            soundManager.play('youwon');
+        } else {
+            loseDialog.showModal();
+            soundManager.play('youlost');
+        }
+    }
+}
+
+/**
+ * Shows the impressum dialog
+ */
+function showImpressum() {
+    const impressumDialog = document.getElementById('impressumDialog');
+    if (impressumDialog) {
+        impressumDialog.showModal();
+    }
+}
+/**
+ * Closes the impressum dialog
+ */
+function closeImpressum() {
+    const impressumDialog = document.getElementById('impressumDialog');
+    if (impressumDialog) {
+        impressumDialog.close();
+    }
+}
+
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+        const impressumDialog = document.getElementById('impressumDialog');
+        if (impressumDialog && impressumDialog.open) {
+            closeImpressum();
+        }
+    }
+});

@@ -1,19 +1,71 @@
+/**
+ * @type {HTMLCanvasElement} Canvas element for the game
+ */
 let canvas;
+
+/**
+ * @type {CanvasRenderingContext2D} 2D rendering context
+ */
 let ctx; 
+
+/**
+ * @type {World} Current game world instance
+ */
 let world;
+
+/**
+ * @type {Keyboard} Keyboard input handler
+ */
 let keyboard = new Keyboard();
+
+/**
+ * @type {boolean} Indicates whether the game has started
+ */
 let gameStarted = false;
+
+/**
+ * @type {boolean} Indicates whether the game has ended
+ */
 let gameEnded = false;
+
+/**
+ * @type {number} Interval ID for status checking
+ */
 let statusInterval;
+
+/**
+ * @type {Sounds} Sound manager instance
+ */
 let soundManager; 
+
+/**
+ * @type {Controller} Game controller for pause functionality
+ */
 let gameController; 
 
+/**
+ * @type {HTMLDialogElement} Start dialog element
+ */
 let startDialog;
+
+/**
+ * @type {HTMLDialogElement} Win dialog element
+ */
 let winDialog;
+
+/**
+ * @type {HTMLDialogElement} Lose dialog element 
+ */
 let loseDialog;
+
+/**
+ * @type {HTMLDialogElement} Controls dialog element
+ */
 let controlsDialog;
 
-
+/**
+ * Initializes game features
+ */
 function initGameFeatures() {
     initMobileControls();
     initMuteButton();
@@ -22,6 +74,9 @@ function initGameFeatures() {
     gameController = new Controller();
 }
 
+/**
+ * Main initialization function - called when the page loads
+ */
 function init() {
     canvas = document.getElementById("canvas");
     ctx = canvas.getContext('2d');
@@ -41,14 +96,10 @@ function init() {
     window.addEventListener('keydown', handleEnterStart);
 }
 
-function showControls() {
-    controlsDialog.showModal();
-}
-
-function closeControls() {
-    controlsDialog.close();
-}
-
+/**
+ * Handles Enter key to start the game
+ * @param {KeyboardEvent} event 
+ */
 function handleEnterStart(event) {
     if (event.key === "Enter" && !gameStarted) {
         if (controlsDialog && controlsDialog.open) {
@@ -63,6 +114,9 @@ function handleEnterStart(event) {
     }
 }
 
+/**
+ * starts the game
+ */
 function startGame() {
     window.removeEventListener('keydown', handleEnterStart);
     startDialog.close();
@@ -74,11 +128,17 @@ function startGame() {
     initGame();
 }
 
+/**
+ * initializes the game world and starts status checking
+ */
 function initGame() {
     world = new World(canvas, keyboard);
     checkGameStatus();
 }
 
+/**
+ * continually checks the game status for win/loss conditions
+ */
 function checkGameStatus() {
     statusInterval = setInterval(() => {
         if (!gameEnded && world && world.character) {
@@ -102,23 +162,11 @@ function checkGameStatus() {
     }, 100);
 }
 
-function showEndDialog(won) {
-    if (world) {
-        world = null;
-    }
-    if (soundManager) {
-        soundManager.stopBackgroundMusic();
-        if (won) {
-            winDialog.showModal();
-            soundManager.play('youwon');
-        } else {
-            loseDialog.showModal();
-            soundManager.play('youlost');
-        }
-    }
-}
 
 
+/**
+ * restarts the game by resetting all variables and showing the start dialog
+ */
 function restartGame() {
     winDialog.close();
     loseDialog.close();
@@ -263,6 +311,9 @@ window.addEventListener('keyup', (event) => {
     }
 });
 
+/**
+ * initializes mobile control buttons with touch event listeners
+ */
 function initMobileControls() {
     const leftBtn = document.getElementById('left-btn');
     const rightBtn = document.getElementById('right-btn');
@@ -295,6 +346,11 @@ function initMobileControls() {
     });
 }
 
+/**
+ * handles button press events and updates keyboard state
+ * @param {string} btnId - ID of the button pressed
+ * @param {boolean} isPressed - true if button is pressed, false if released
+ */
 function handleButtonPress(btnId, isPressed) {
     switch(btnId) {
         case 'left-btn':
@@ -312,6 +368,9 @@ function handleButtonPress(btnId, isPressed) {
     }
 }
 
+/**
+ * checks device orientation and shows/hides messages and controls accordingly
+ */
 function checkOrientation() {
     const orientationMsg = document.getElementById('orientation-message');
     const mobileControls = document.getElementById('mobile-controls');
@@ -338,7 +397,9 @@ function checkOrientation() {
 window.addEventListener('orientationchange', checkOrientation);
 window.addEventListener('resize', checkOrientation);
 
-
+/**
+ * initializes the mute button functionality
+ */
 function initMuteButton() {
     const muteBtn = document.getElementById('mute-btn');
     if (muteBtn) {
@@ -350,26 +411,3 @@ function initMuteButton() {
         });
     }
 }
-
-function showImpressum() {
-    const impressumDialog = document.getElementById('impressumDialog');
-    if (impressumDialog) {
-        impressumDialog.showModal();
-    }
-}
-
-function closeImpressum() {
-    const impressumDialog = document.getElementById('impressumDialog');
-    if (impressumDialog) {
-        impressumDialog.close();
-    }
-}
-
-document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') {
-        const impressumDialog = document.getElementById('impressumDialog');
-        if (impressumDialog && impressumDialog.open) {
-            closeImpressum();
-        }
-    }
-});
