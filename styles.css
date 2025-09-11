@@ -139,6 +139,19 @@ dialog::backdrop {
     }
 }
 
+@media only screen and (hover: none) and (pointer: coarse) and (orientation: landscape) {
+    #mobile-controls {
+        display: block !important;
+    }
+}
+
+@media only screen and (orientation: portrait) {
+    #mobile-controls {
+        display: none !important;
+    }
+}
+
+
 .control-pad {
     display: flex;
     gap: 10px;
@@ -157,7 +170,7 @@ dialog::backdrop {
     border-radius: 10px;
     touch-action: none;
     user-select: none;
-    -webkit-user-select: none;
+    cursor: pointer;
 }
 
 .control-btn:active {
@@ -182,4 +195,33 @@ dialog::backdrop {
 
 .mute-button:hover {
     background: rgba(0,0,0,0.7);
+}
+
+#orientation-message {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.orientation-content {
+    text-align: center;
+    color: white;
+    padding: 20px;
+}
+
+.orientation-content h2 {
+    margin: 20px 0 10px 0;
+    font-size: 24px;
+}
+
+.orientation-content p {
+    font-size: 16px;
+    opacity: 0.9;
 }

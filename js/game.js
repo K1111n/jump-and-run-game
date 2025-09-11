@@ -31,7 +31,7 @@ function init() {
     loseDialog = document.getElementById('loseDialog');
     controlsDialog = document.getElementById('controlsDialog');
     
-
+    checkOrientation(); 
     initGameFeatures();
 
     if (startDialog) {
@@ -269,58 +269,75 @@ function initMobileControls() {
     const jumpBtn = document.getElementById('jump-btn');
     const throwBtn = document.getElementById('throw-btn');
     
-    if (leftBtn) {
-        leftBtn.addEventListener('touchstart', (e) => {
-            keyboard.LEFT = true;
-        });
-        leftBtn.addEventListener('touchend', (e) => {
-            keyboard.LEFT = false;
-        });
-    }
-    
-    if (rightBtn) {
-        rightBtn.addEventListener('touchstart', (e) => {
-            keyboard.RIGHT = true;
-        });
-        rightBtn.addEventListener('touchend', (e) => {
-            keyboard.RIGHT = false;
-        });
-    }
-    
-    if (jumpBtn) {
-        jumpBtn.addEventListener('touchstart', (e) => {
-            keyboard.UP = true;
-        });
-        jumpBtn.addEventListener('touchend', (e) => {
-            e.preventDefault();
-            keyboard.UP = false;
-        });
-    }
-    
-    if (throwBtn) {
-        throwBtn.addEventListener('touchstart', (e) => {
-            keyboard.SPACE = true;
-        });
-        throwBtn.addEventListener('touchend', (e) => {
-            keyboard.SPACE = false;
-        });
+    const mobileButtons = [leftBtn, rightBtn, jumpBtn, throwBtn];
+    mobileButtons.forEach(btn => {
+        if(btn) {
+            btn.addEventListener('contextmenu', (e) => {
+                e.preventDefault();
+                return false;
+            });
+            
+            btn.addEventListener('touchstart', (e) => {
+                e.preventDefault();
+                handleButtonPress(btn.id, true);
+            });
+            
+            btn.addEventListener('touchend', (e) => {
+                e.preventDefault();
+                handleButtonPress(btn.id, false);
+            });
+            
+            btn.addEventListener('touchcancel', (e) => {
+                e.preventDefault();
+                handleButtonPress(btn.id, false);
+            });
+        }
+    });
+}
+
+function handleButtonPress(btnId, isPressed) {
+    switch(btnId) {
+        case 'left-btn':
+            keyboard.LEFT = isPressed;
+            break;
+        case 'right-btn':
+            keyboard.RIGHT = isPressed;
+            break;
+        case 'jump-btn':
+            keyboard.UP = isPressed;
+            break;
+        case 'throw-btn':
+            keyboard.SPACE = isPressed;
+            break;
     }
 }
 
+function checkOrientation() {
+    const orientationMsg = document.getElementById('orientation-message');
+    const mobileControls = document.getElementById('mobile-controls');
+    const canvas = document.getElementById('canvas');
+    
+    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    
+    if(isMobile) {
+        if(window.innerHeight > window.innerWidth) {
+            if(orientationMsg) orientationMsg.style.display = 'flex';
+            if(canvas) canvas.style.display = 'none';
+            if(mobileControls) mobileControls.style.display = 'none';
+        } else {
+            if(orientationMsg) orientationMsg.style.display = 'none';
+            if(canvas) canvas.style.display = 'block';
+            if(mobileControls) mobileControls.style.display = 'block';
+        }
+    } else {
+        if(orientationMsg) orientationMsg.style.display = 'none';
+        if(mobileControls) mobileControls.style.display = 'none';
+    }
+}
 
+window.addEventListener('orientationchange', checkOrientation);
+window.addEventListener('resize', checkOrientation);
 
-// document.addEventListener("keydown", (event) => {
-//     if (event.key === "F" || event.key === "f") {
-//         event.preventDefault();
-//         if (document.fullscreenElement) {
-//             document.exitFullscreen();
-//         } else {
-//             canvas.requestFullscreen().catch((err) => {
-//                 console.error(`Error enabling fullscreen: ${err.message}`);
-//             });
-//         }
-//     }
-// });
 
 function initMuteButton() {
     const muteBtn = document.getElementById('mute-btn');

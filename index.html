@@ -56,12 +56,20 @@
         </div>
     </dialog>
 
+    <div id="orientation-message" style="display: none;">
+        <div class="orientation-content">
+            <img src="/img/rotate-device.svg" alt="Rotate Device" style="width: 100px; height: 100px;">
+            <h2>Please Rotate Your Device</h2>
+            <p>This game is best played in landscape mode</p>
+        </div>
+    </div>
+    
     <div id="mobile-controls">
         <div class="control-pad">
-            <button class="control-btn" id="left-btn">←</button>
-            <button class="control-btn" id="right-btn">→</button>
-            <button class="control-btn" id="jump-btn">↑</button>
-            <button class="control-btn" id="throw-btn">🍾</button>
+            <button class="control-btn" id="left-btn" ontouchstart="event.preventDefault()">←</button>
+            <button class="control-btn" id="right-btn" ontouchstart="event.preventDefault()">→</button>
+            <button class="control-btn" id="jump-btn" ontouchstart="event.preventDefault()">↑</button>
+            <button class="control-btn" id="throw-btn" ontouchstart="event.preventDefault()">🍾</button>
         </div>
     </div>
 
