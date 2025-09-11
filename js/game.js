@@ -389,30 +389,43 @@ function checkOrientation() {
             if(orientationMsg) orientationMsg.style.display = 'none';
             if(canvas) {
                 canvas.style.display = 'block';
-                canvas.style.width = '100vw';
-                canvas.style.height = '100vh';
-                canvas.width = window.innerWidth;
-                canvas.height = window.innerHeight;
+                const gameAspectRatio = 720 / 480; // 1.5
+                const screenAspectRatio = window.innerWidth / window.innerHeight;
+                        
+                let canvasWidth, canvasHeight;
+                        
+                if (screenAspectRatio > gameAspectRatio) {
+                    canvasHeight = window.innerHeight;
+                    canvasWidth = canvasHeight * gameAspectRatio;
+                } else {
+                    canvasWidth = window.innerWidth;
+                    canvasHeight = canvasWidth / gameAspectRatio;
+                }
+                        
+                    canvas.style.width = canvasWidth + 'px';
+                    canvas.style.height = canvasHeight + 'px';
+                    canvas.width = 720;
+                    canvas.height = 480;
+                }
+                if(mobileControls) mobileControls.style.display = 'block';
+                if(title) title.style.display = 'none';
+                    
+                document.body.style.overflow = 'hidden';
             }
-            if(mobileControls) mobileControls.style.display = 'block';
-            if(title) title.style.display = 'none';
-            
-            document.body.style.overflow = 'hidden';
+        } else {
+            if(orientationMsg) orientationMsg.style.display = 'none';
+            if(mobileControls) mobileControls.style.display = 'none';
+            if(canvas) {
+                canvas.style.display = 'block';
+                canvas.style.width = '720px';
+                canvas.style.height = '480px';
+                canvas.width = 720;
+                canvas.height = 480;
+            }
+            if(title) title.style.display = 'block';
+            document.body.style.overflow = 'visible';
         }
-    } else {
-        if(orientationMsg) orientationMsg.style.display = 'none';
-        if(mobileControls) mobileControls.style.display = 'none';
-        if(canvas) {
-            canvas.style.display = 'block';
-            canvas.style.width = '720px';
-            canvas.style.height = '480px';
-            canvas.width = 720;
-            canvas.height = 480;
-        }
-        if(title) title.style.display = 'block';
-        document.body.style.overflow = 'visible';
     }
-}
 
 window.addEventListener('orientationchange', () => {
     setTimeout(checkOrientation, 100); 
