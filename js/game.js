@@ -104,19 +104,20 @@ function checkGameStatus() {
 
 function showEndDialog(won) {
     if (world) {
-        if (soundManager) {
-            soundManager.stopBackgroundMusic();
-            if (won) {
-                winDialog.showModal();
-                soundManager.play('youwon');
-            } else {
-                loseDialog.showModal();
-                soundManager.play('youlost');
-            }
-            world = null;
+        world = null;
+    }
+    if (soundManager) {
+        soundManager.stopBackgroundMusic();
+        if (won) {
+            winDialog.showModal();
+            soundManager.play('youwon');
+        } else {
+            loseDialog.showModal();
+            soundManager.play('youlost');
         }
     }
 }
+
 
 function restartGame() {
     winDialog.close();
