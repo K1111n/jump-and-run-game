@@ -46,42 +46,26 @@ class World {
         if(!this.character.isDead()) {
             this.level.enemies.forEach((enemy) => {
                 if(this.character.isColliding(enemy) && !enemy.isDead) {
-                    if(enemy instanceof ChickenSmall) {
-                        if(this.character.speedY < 0 && 
-                            this.character.y + this.character.height - 80 < enemy.y) {
-                            enemy.killEnemy();
-                            if (soundManager) {
-                                soundManager.play('enemyDefeated');
-                            }
-                            this.character.jump();
-                            if (soundManager) {
-                                soundManager.play('jump');
-                            }
-                        } else {
-                            this.character.hit();
-                            if (soundManager) {
-                                soundManager.play('hurt');
-                            }                            
-                            this.statusBar.setPercentage(this.character.energy);
+                    let characterBox = this.character.getHitbox();
+                    let enemyBox = enemy.getHitbox();
+                    let isJumpingOnEnemy = this.character.speedY < 0 && 
+                                           (characterBox.y + characterBox.height - 40) < enemyBox.y;
+                    
+                    if(isJumpingOnEnemy) {
+                        enemy.killEnemy();
+                        if (soundManager) {
+                            soundManager.play('enemyDefeated');
+                        }
+                        this.character.jump();
+                        if (soundManager) {
+                            soundManager.play('jump');
                         }
                     } else {
-                        if(this.character.speedY < 0 && 
-                            this.character.y + this.character.height - 80 < enemy.y) {
-                            enemy.killEnemy();
-                            if (soundManager) {
-                                soundManager.play('enemyDefeated');
-                            }
-                            this.character.jump();
-                            if (soundManager) {
-                                soundManager.play('jump');
-                            }
-                        } else {
-                            this.character.hit();
-                            if (soundManager) {
-                                soundManager.play('hurt');
-                            }
-                            this.statusBar.setPercentage(this.character.energy);
+                        this.character.hit();
+                        if (soundManager) {
+                            soundManager.play('hurt');
                         }
+                        this.statusBar.setPercentage(this.character.energy);
                     }
                 }
             });
@@ -175,7 +159,7 @@ class World {
         }
 
         mo.draw(this.ctx);
-        // mo.drawFrame(this.ctx);
+        mo.drawFrame(this.ctx);
 
         if(mo.otherDirection) {
             this.flipImageBack(mo);

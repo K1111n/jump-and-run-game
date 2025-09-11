@@ -13,56 +13,89 @@ class DrawableObject {
         this.img.src = path;
     }
 
+    // character.isColliding(chicken)
+    isColliding(mo) {
+        let thisBox = this.getHitbox();
+        let moBox = mo.getHitbox();
+    
+    return thisBox.x < moBox.x + moBox.width &&
+           thisBox.x + thisBox.width > moBox.x &&
+           thisBox.y < moBox.y + moBox.height &&
+           thisBox.y + thisBox.height > moBox.y;
+    }
+
+    getHitbox() {
+        if(this instanceof Character) {
+            return {
+                x: this.x + 10,
+                y: this.y,
+                width: this.width - 20,
+                height: this.height - 15,
+            };
+        }
+        else if(this instanceof Chicken) {
+            return {
+                x: this.x,
+                y: this.y,
+                width: this.width,
+                height: this.height,
+            };
+        }
+        else if(this instanceof ChickenSmall) {
+            return {
+                x: this.x + 5,
+                y: this.y + 10,
+                width: this.width - 10,
+                height: this.height - 15,
+            };
+        }
+        else if(this instanceof Endboss) {
+            return {
+                x: this.x + 20,
+                y: this.y + 60,
+                width: this.width - 30,
+                height: this.height - 60,
+            };
+        }
+        else if(this instanceof Bottles) {
+            return {
+                x: this.x + 20,
+                y: this.y,
+                width: 40,
+                height: 70,
+            };
+        }
+        else if(this instanceof Coin) {
+            return {
+                x: this.x + 30,
+                y: this.y + 30,
+                width: 60,
+                height: 60,
+            };
+        }
+        else if(this instanceof ThrowableObject) {
+            return {
+                x: this.x,
+                y: this.y,
+                width: this.width,
+                height: this.height,
+            };
+        }
+        else {
+            return {
+                x: this.x,
+                y: this.y,
+                width: this.width,
+                height: this.height,
+            };
+        }
+    }
+
     draw(ctx) {
         if (this.img) { 
             ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
         } 
     }   
-
-    // drawFrame(ctx) {
-    //     if(this instanceof Chicken || this instanceof ChickenSmall) {
-    //         ctx.beginPath();
-    //         ctx.lineWidth = "3"; 
-    //         ctx.strokeStyle = "blue";
-    //         ctx.rect(this.x, this.y, this.width, this.height);
-    //         ctx.stroke();
-    //     } 
-    //     else if(this instanceof Bottles) {
-    //         ctx.beginPath();
-    //         ctx.lineWidth = "3"; 
-    //         ctx.strokeStyle = "green";
-    //         ctx.rect(this.x + 30, this.y + 10, 30, 60);
-    //         ctx.stroke();
-    //     } 
-    //     else if(this instanceof Coin) {
-    //         ctx.beginPath();
-    //         ctx.lineWidth = "3"; 
-    //         ctx.strokeStyle = "orange";
-    //         ctx.rect(this.x + 45, this.y + 45, 30, 30);
-    //         ctx.stroke();
-    //     }
-    //     else if(this instanceof Endboss) {
-    //         ctx.beginPath();
-    //         ctx.lineWidth = "3"; 
-    //         ctx.strokeStyle = "red";
-    //         ctx.rect(this.x + 20, this.y + 60, this.width - 30, this.height - 60);
-    //         ctx.stroke();
-    //     }
-    //     else if(this instanceof Character) {
-    //         ctx.beginPath();
-    //         ctx.lineWidth = "3"; 
-    //         ctx.strokeStyle = "purple";
-    //         ctx.rect(this.x + 10, this.y, this.width - 20, this.height - 15);
-    //         ctx.stroke();
-    //     }
-    //     else if(this instanceof ThrowableObject) {
-    //         ctx.beginPath();
-    //         ctx.lineWidth = "3"; 
-    //         ctx.strokeStyle = "yellow";
-    //         ctx.rect(this.x, this.y, this.width, this.height);
-    //         ctx.stroke();
-    //     }
-    // }
 
     loadImages(arr) {
         arr.forEach((path) => {
