@@ -350,3 +350,26 @@ function initMuteButton() {
         });
     }
 }
+
+function showImpressum() {
+    const impressumDialog = document.getElementById('impressumDialog');
+    if (impressumDialog) {
+        impressumDialog.showModal();
+    }
+}
+
+function closeImpressum() {
+    const impressumDialog = document.getElementById('impressumDialog');
+    if (impressumDialog) {
+        impressumDialog.close();
+    }
+}
+
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+        const impressumDialog = document.getElementById('impressumDialog');
+        if (impressumDialog && impressumDialog.open) {
+            closeImpressum();
+        }
+    }
+});

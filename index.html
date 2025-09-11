@@ -51,7 +51,7 @@
             <div class="overlay-content" style="display:flex;">
                 <button class="game-button start-button" onclick="startGame()">ENTER/Start Game</button>
                 <button class="game-button" style="background: #FF9800;" onclick="showControls()">Controls</button>
-                <button class="game-button" style="background: #9C27B0;"><a href="" target="_blank" style="text-decoration: none;">Impressum</a></button>
+                <button class="game-button" style="background: #9C27B0;" onclick="showImpressum()">Impressum</button>
             </div>
         </div>
     </dialog>
@@ -114,6 +114,30 @@
             </div>
         </div>
     </dialog>
+
+    <dialog id="impressumDialog">
+        <div class="dialog-content" style="background: #f5f5f5; padding: 40px; border-radius: 15px; max-width: 600px; max-height: 80vh; overflow-y: auto;">
+            <button class="close-btn" onclick="closeImpressum()" style="position: absolute; top: 10px; right: 10px; background: #F44336; color: white; border: none; border-radius: 50%; width: 30px; height: 30px; cursor: pointer; font-size: 20px;">×</button>
+            
+            <h1 style="color: #333; margin-bottom: 20px;">Impressum</h1>
+            <p style="color: #555; line-height: 1.6;">
+                Kajanan Yoganathan<br />
+                Hugo-Küchingstraße, 6<br />
+                59067 Hamm
+            </p>
+            
+            <h2 style="color: #333; margin-top: 30px; margin-bottom: 15px;">Kontakt</h2>
+            <p style="color: #555; line-height: 1.6;">
+                Telefon: 015128836523<br />
+                E-Mail: jeezy93@hotmail.de
+            </p>
+            
+            <p style="color: #777; font-size: 14px; margin-top: 30px;">
+                Quelle: <a href="https://www.e-recht24.de/impressum-generator.html" target="_blank" style="color: #4CAF50;">https://www.e-recht24.de/impressum-generator.html</a>
+            </p>
+        </div>
+    </dialog>
+    
 
     <div id="game-sounds" style="display: none;">
         <audio id="sound-backgroundmusic" src="/sounds/backgroundmusic.mp3" preload="auto"></audio>
