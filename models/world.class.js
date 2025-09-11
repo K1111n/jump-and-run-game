@@ -45,9 +45,10 @@ class World {
     checkCollisions() {
         if(!this.character.isDead()) {
             this.level.enemies.forEach((enemy) => {
-                if(this.character.isColliding(enemy)) {
+                if(this.character.isColliding(enemy) && !enemy.isDead) {
                     if(enemy instanceof ChickenSmall) {
-                        if(this.character.speedY < 0 && this.character.y + 207 < enemy.y) {
+                        if(this.character.speedY < 0 && 
+                            this.character.y + this.character.height - 80 < enemy.y) {
                             enemy.killEnemy();
                             if (soundManager) {
                                 soundManager.play('enemyDefeated');
@@ -64,7 +65,8 @@ class World {
                             this.statusBar.setPercentage(this.character.energy);
                         }
                     } else {
-                        if(this.character.speedY < 0 && this.character.y + 200 < enemy.y) {
+                        if(this.character.speedY < 0 && 
+                            this.character.y + this.character.height - 80 < enemy.y) {
                             enemy.killEnemy();
                             if (soundManager) {
                                 soundManager.play('enemyDefeated');
@@ -107,24 +109,26 @@ class World {
         
         this.throwableObjects.forEach((bottle, bottleIndex) => {
             this.level.enemies.forEach((enemy, enemyIndex) => {
-                if(bottle.isColliding(enemy)) {
+                if(bottle.isColliding(enemy) && !enemy.isDead) {
                     if(enemy instanceof Endboss) {
                         enemy.hit();
                         this.statusBarEndboss.setPercentage(enemy.energy * 4);
-                        if (window.soundManager) {
-                            window.soundManager.play('hurt');
+                        if (soundManager) {
+                            soundManager.play('hurt');
                         }
                         if(enemy.isDead) {
                             console.log('Endboss defeated');
                         }
                     } else {
                         enemy.killEnemy();
-                        if (window.soundManager) {
-                            window.soundManager.play('enemyDefeated');
+                        if (soundManager) {
+                            soundManager.play('enemyDefeated');
                         }
                     }
                     bottle.splashBottle();
-                    this.throwableObjects.splice(bottleIndex, 1);
+                    setTimeout(() => {
+                        this.throwableObjects.splice(bottleIndex, 1);
+                    }, 500);
                 }
             });
         });
