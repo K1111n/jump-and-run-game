@@ -1,8 +1,26 @@
+/**
+ * Chicken enemy class
+ */
 class Chicken extends MovableObject {
 
+    /**
+     * @type {number} Y position
+     */
     y = 340;
+
+    /**
+     * @type {number} Height
+     */
     height = 90;
+
+    /**
+     * @type {number} Width
+     */
     width = 80;
+
+    /**
+     * @type {boolean} Death status
+     */
     isDead = false;
     IMAGES_WALKING = [
             '/img/3_enemies_chicken/chicken_normal/1_walk/1_w.png',
@@ -14,6 +32,9 @@ class Chicken extends MovableObject {
         '/img/3_enemies_chicken/chicken_normal/2_dead/dead.png'
     ]
 
+    /**
+     * creates a new chicken
+     */
     constructor() {
         super().loadImage('/img/3_enemies_chicken/chicken_normal/1_walk/1_w.png');
         this.loadImages(this.IMAGES_WALKING);
@@ -26,6 +47,9 @@ class Chicken extends MovableObject {
         this.animate();
     }
 
+    /**
+     * animates the chicken
+     */
     animate() {
         setInterval(() => {
             if (!this.isDead) {
@@ -42,6 +66,9 @@ class Chicken extends MovableObject {
         }, 200);
     }
     
+    /**
+     * kills the enemy
+     */
     killEnemy() {
         this.isDead = true;
         this.speed = 0;

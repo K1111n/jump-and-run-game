@@ -1,19 +1,58 @@
+/**
+ * Base class for all drawable objects in the game.
+ */
 class DrawableObject {
     
+    /**
+     * @type {HTMLImageElement} Object image
+     */
     img;
+
+    /**
+     * @type {Object} Cache for loaded images 
+     */
     imageCache = [];
+
+    /**
+     * @type {number} Current image index for animations
+     */
     currentImage = 0;
+
+    /**
+     * @type {number} X position
+     */
     x = 120;
+
+    /**
+     * @type {number} Y position
+     */
     y = 280;
+
+    /**
+     * @type {number} Object height
+     */
     height = 150;
+
+    /**
+     * @type {number} Object width
+     */
     width = 100;
 
+    /**
+     * loads a single image
+     * @param {string} path to the image
+     */
     loadImage(path) {
         this.img = new Image();
         this.img.src = path;
     }
 
     // character.isColliding(chicken)
+    /**
+     * checks collision with another object
+     * @param {DrawableObject} mo - other object
+     * @returns {boolean} True if colliding
+     */
     isColliding(mo) {
         let thisBox = this.getHitbox();
         let moBox = mo.getHitbox();
@@ -24,6 +63,10 @@ class DrawableObject {
            thisBox.y + thisBox.height > moBox.y;
     }
 
+    /**
+     * returns the hitbox of the object
+     * @returns {Object} Hitbox for collision detection
+     */
     getHitbox() {
         if(this instanceof Character) {
             return {
@@ -83,12 +126,20 @@ class DrawableObject {
         }
     }
 
+    /**
+     * draws the object on the canvas
+     * @param {CanvasRenderingContext2D} ctx Canvas context
+     */
     draw(ctx) {
         if (this.img) { 
             ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
         } 
     }   
 
+    /**
+     * loads multiple images into the cache
+     * @param {[]} arr - Array of image paths
+     */
     loadImages(arr) {
         arr.forEach((path) => {
             let img = new Image();

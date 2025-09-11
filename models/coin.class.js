@@ -1,3 +1,6 @@
+/**
+ * Coin class
+ */
 class Coin extends DrawableObject {
 
     IMAGES = [
@@ -5,6 +8,9 @@ class Coin extends DrawableObject {
         '/img/8_coin/coin_2.png',
     ];
 
+    /**
+     * creates a new coin
+     */
     constructor() {
         super().loadImage('/img/8_coin/coin_1.png');
         this.loadImages(this.IMAGES);

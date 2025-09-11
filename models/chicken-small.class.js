@@ -1,8 +1,26 @@
+/**
+ * small chicken enemy class
+ */
 class ChickenSmall extends MovableObject {
 
+    /**
+     * @type {number} Y position
+     */
     y = 370;
+
+    /**
+     * @type {number} Height
+     */
     height = 60;
+
+    /**
+     * @type {number} Width
+     */
     width = 50;
+
+    /**
+     * @type {boolean} Death status 
+     */
     isDead = false;
     IMAGES_WALKING = [
             '/img/3_enemies_chicken/chicken_small/1_walk/1_w.png',
@@ -14,6 +32,9 @@ class ChickenSmall extends MovableObject {
         '/img/3_enemies_chicken/chicken_small/2_dead/dead.png'
     ]
 
+    /**
+     * creates small chicken enemy
+     */
     constructor() {
         super().loadImage('/img/3_enemies_chicken/chicken_small/1_walk/1_w.png');
         this.loadImages(this.IMAGES_WALKING);
@@ -25,6 +46,9 @@ class ChickenSmall extends MovableObject {
         this.animate();
     }
 
+    /**
+     * animates small chicken enemy
+     */
     animate() {
         setInterval(() => {   
             if (!this.isDead) {     
@@ -41,6 +65,9 @@ class ChickenSmall extends MovableObject {
         }, 200);
     }
 
+    /**
+     * kills the small chicken enemy
+     */
     killEnemy() {
         this.isDead = true;
         this.speed = 0;

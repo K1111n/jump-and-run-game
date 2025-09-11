@@ -1,3 +1,6 @@
+/**
+ * Endboss status bar class
+ */
 class StatusBarEndboss extends StatusBar {
 
     IMAGES = [
@@ -9,8 +12,14 @@ class StatusBarEndboss extends StatusBar {
         '/img/7_statusbars/2_statusbar_endboss/orange/orange100.png',
     ];
 
+    /**
+     * @type {number} Percentage of endboss health
+     */
     percentage = 100;
 
+    /**
+     * Creates a new endboss status bar
+     */
     constructor() {
         super();
         this.loadImages(this.IMAGES);
@@ -21,6 +30,10 @@ class StatusBarEndboss extends StatusBar {
         this.setPercentage(100);
     }
 
+    /**
+     * Sets the percentage of endboss health and updates the image accordingly
+     * @returns {number} Index of the image to be displayed based on the percentage of health
+     */
     resolveImageIndex() {
         if (this.percentage == 100) {
             return 5;

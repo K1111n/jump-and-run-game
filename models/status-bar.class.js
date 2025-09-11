@@ -1,3 +1,6 @@
+/**
+ * Base class for status bars
+ */
 class StatusBar extends DrawableObject {
 
 
@@ -10,8 +13,14 @@ class StatusBar extends DrawableObject {
         '/img/7_statusbars/1_statusbar/2_statusbar_health/blue/100.png',
     ];
 
+    /**
+     * @type {number} Percentage value
+     */
     percentage = 100;
 
+    /**
+     * creates a new StatusBar
+     */
     constructor() {
         super();
         this.loadImages(this.IMAGES);
@@ -22,12 +31,20 @@ class StatusBar extends DrawableObject {
         this.setPercentage(100);
     }
 
+    /**
+     * sets the percentage value
+     * @param {number} percentage - New percentage value
+     */
     setPercentage(percentage) {
         this.percentage = percentage; // => 0 ... 5
         let path = this.IMAGES[this.resolveImageIndex()];
         this.img = this.imageCache[path];
     }
 
+    /**
+     * determines the image index based on the percentage value
+     * @returns {number} Image index
+     */
     resolveImageIndex() {
             if (this.percentage == 100) {
                 return 5;

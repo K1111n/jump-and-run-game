@@ -1,9 +1,36 @@
+/**
+ * Endboss class representing the final enemy in the game.
+ */
 class Endboss extends MovableObject {
+
+    /**
+     * @type {number} Height 
+     */
     height = 400;
+
+    /**
+     * @type {number} Width
+     */
     width = 250;
+
+    /**
+     * @type {number} Y position
+     */
     y = 55;
+
+    /**
+     * @type {number} Energy 
+     */
     energy = 25; 
+
+    /**
+     * @type {boolean} death status
+     */
     isDead = false;
+
+    /**
+     * @type {boolean} Hurt animation status
+     */
     isHurtAnimation = false;
 
     IMAGES_WALKING = [
@@ -47,6 +74,9 @@ class Endboss extends MovableObject {
         '/img/4_enemie_boss_chicken/5_dead/G26.png',
     ];
 
+    /**
+     * Creates a new endboss
+     */
     constructor() {
         super().loadImage('/img/4_enemie_boss_chicken/2_alert/G5.png');
         this.loadImages(this.IMAGES_WALKING);
@@ -59,6 +89,9 @@ class Endboss extends MovableObject {
         this.animate();
     }
 
+    /**
+     * Animates the endboss by moving and changing its image based on its state.
+     */
     animate() {
         setInterval(() => {
             if (!this.isDead && this.x > 3500) {
@@ -81,6 +114,10 @@ class Endboss extends MovableObject {
         }, 200);
     }
 
+    /**
+     * processes a hit on the endboss
+     * @returns {boolean} Whether the endboss is dead, or if another hit is possible.
+     */
     hit() {
         if (this.isDead) return; 
         

@@ -1,3 +1,6 @@
+/**
+ * Throwable bottle class
+ */
 class ThrowableObject extends MovableObject {
 
      IMAGES_BOTTLE_ROTATION = [
@@ -16,6 +19,11 @@ class ThrowableObject extends MovableObject {
             '/img/6_salsa_bottle/bottle_rotation/bottle_splash/6_bottle_splash.png',
     ]
 
+    /**
+     * creates a new throwable bottle
+     * @param {number} x - X position of the bottle
+     * @param {number} y - Y position of the bottle
+     */
     constructor(x, y) {
         super().loadImage('/img/6_salsa_bottle/bottle_rotation/1_bottle_rotation.png');
         this.loadImages(this.IMAGES_BOTTLE_ROTATION);
@@ -28,6 +36,9 @@ class ThrowableObject extends MovableObject {
         this.throw();
     }
 
+    /**
+     * Throws the bottle
+     */
     throw() {
         this.speedY = 30;
         this.applyGravity();
@@ -39,11 +50,18 @@ class ThrowableObject extends MovableObject {
         }, 1000 / 60);
     }
 
+    /**
+     * activates splash animation
+     * @returns if the bottle has splashed do nothing.
+     */
     splashBottle() {
         if(this.bottleSplash) return;
         this.bottleSplash = true;
     }
 
+    /**
+     * animates the bottle
+     */
     animate() {
         setInterval(() => {
             if(!this.bottleSplash) {

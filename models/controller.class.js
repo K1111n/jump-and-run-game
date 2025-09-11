@@ -1,10 +1,20 @@
+/**
+ * Game controller for pause and logic control
+ */
 class Controller {
+
+    /**
+     * Constructor to initialize the controller
+     */
     constructor() {
         this.isPaused = false;
         this.pauseDialog = null;
         this.initPauseControls();
     }
 
+    /**
+     * Initialize pause controls and event listeners
+     */
     initPauseControls() {
         this.pauseDialog = document.getElementById('pauseDialog');
         const resumeBtn = document.getElementById('resume-btn');
@@ -25,6 +35,9 @@ class Controller {
         });
     }
 
+    /**
+     * Toggle the pause state of the game
+     */
     togglePause() {
         if (this.isPaused) {
                 this.resume();
@@ -33,6 +46,10 @@ class Controller {
         }
     }
 
+    /**
+     *  Pause the game
+     * @returns does nothing if game not started or already ended
+     */
     pause() {
         if (!gameStarted || gameEnded) return;
         
@@ -48,6 +65,9 @@ class Controller {
         }
     }
 
+    /**
+     * Resume the game
+     */
     resume() {
         this.isPaused = false;
         if (this.pauseDialog) {
@@ -68,6 +88,9 @@ class Controller {
         }
     }
     
+    /**
+     * Quit the game and restart    
+     */
     quit() {
         if (this.pauseDialog) {
             this.pauseDialog.close();
