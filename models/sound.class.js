@@ -5,7 +5,7 @@ class Sounds {
             jump: document.getElementById('sound-jump'),
             hurt: document.getElementById('sound-hurt'),
             enemyDefeated: document.getElementById('sound-enemyDefeated'),
-            youwin: document.getElementById('sound-youwon'),
+            youwon: document.getElementById('sound-youwon'),
             youlost: document.getElementById('sound-youlost'),
         }
 
