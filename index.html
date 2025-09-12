@@ -37,8 +37,8 @@
     <h1>El pollo loco</h1>
 
     <section>
-        <button class="responsiveButton" onclick="enableMobileControls()">Responsive Design</button>
-        <button class="desktopButton" onclick="disableMobileControls()">Desktop Design</button>
+        <!-- <button class="responsiveButton" onclick="enableMobileControls()">Responsive Design</button>
+        <button class="desktopButton" onclick="disableMobileControls()">Desktop Design</button> -->
         <button id="mute-btn" class="mute-button">🔊</button>
     </section>
 
@@ -65,6 +65,10 @@
     </div>
     
 <div id="mobile-controls" class="mobile-controls-hidden">
+    
+     <div class="right-controls">
+        <button class="control-btn action-btn" id="throw-btn" ontouchstart="event.preventDefault()">🍾</button>
+    </div>
     <div class="left-controls">
         <div class="movement-pad">
             <button class="control-btn jump-btn" id="jump-btn" ontouchstart="event.preventDefault()">↑</button>
@@ -73,9 +77,6 @@
                 <button class="control-btn" id="right-btn" ontouchstart="event.preventDefault()">→</button>
             </div>
         </div>
-    </div>
-     <div class="right-controls">
-        <button class="control-btn action-btn" id="throw-btn" ontouchstart="event.preventDefault()">🍾</button>
     </div>
 </div>
 
@@ -95,7 +96,6 @@
                 <p>➡️ - Move Right</p>
                 <p>⬆️ - Jump</p>
                 <p>SPACEBAR - Throw</p>
-                <p>F - Fullscreen</p>
             </div>
             <div style="text-align: center; margin-top: 30px;">
                 <button class="game-button" style="background: #607D8B;" onclick="closeControls()">Back</button>
@@ -134,7 +134,7 @@
             
             <h2 style="color: white; margin-top: 30px; margin-bottom: 15px;">Kontakt</h2>
             <p style="color: white; line-height: 1.6;">
-                Telefon: 015128836523<br />
+                Telefon: 01511111111<br />
                 E-Mail: jeezy93@hotmail.de
             </p>
 

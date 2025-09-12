@@ -190,7 +190,7 @@ class Character extends MovableObject {
             }
             
             this.wasAboveGroundLastFrame = this.isAboveGround();
-        }, 50);
+        }, 500);
     }
 
     /**
