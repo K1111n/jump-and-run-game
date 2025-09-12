@@ -18,13 +18,13 @@ class Sounds {
     /**
      * @type {boolean} Mute status 
      */
-    this.muted = false;
+    this.muted = this.loadMuteStatus();
 
     if (this.sounds.backgroundmusic) {
         this.sounds.backgroundmusic.loop = true;
         this.sounds.backgroundmusic.volume = 0.1; 
     }
-    // this.updateMuteButton();
+    this.updateMuteButton();
     }
 
     /**
@@ -80,8 +80,8 @@ class Sounds {
      */
     toggleMute() {
         this.muted = !this.muted;
-        // this.saveMuteStatus(); 
-        // this.updateMuteButton();
+         this.saveMuteStatus(); 
+         this.updateMuteButton();
         if (this.muted) {
             this.pauseBackgroundMusic();
         } else {
@@ -89,32 +89,31 @@ class Sounds {
         }
     }
 
-//       /**
-//      * loads the Mute-Status from localStorage
-//      * @returns {boolean} Mute-Status
-//      */
-//       loadMuteStatus() {
-//         const stored = localStorage.getItem('gameMuted');
-//         return stored === 'true';
-//     }
-    
-//     /**
-//      * saves the Mute-Status to localStorage
-//      */
-//     saveMuteStatus() {
-//         localStorage.setItem('gameMuted', this.muted.toString());
-//     }
-    
-//     /**
-//      * Updates the mute button icon
-//      */
-//     updateMuteButton() {
-//         const button = document.getElementById('mute-button');
-//         if(button) {
-//             button.innerHTML = this.isMuted ? '🔇' : '🔊';
-//             button.title = this.isMuted ? 'Enable sound' : 'Disable sound';
-//             button.setAttribute('aria-label', this.isMuted ? 'Enable sound' : 'Disable sound');
-//         }
-//     }
-// 
+    /**
+    * loads the Mute-Status from localStorage
+    * @returns {boolean} Mute-Status
+    */
+    loadMuteStatus() {
+        const stored = localStorage.getItem('gameMuted');
+        return stored === 'true';
+    }
+
+    /**
+     * saves the Mute-Status to localStorage
+     */
+    saveMuteStatus() {
+        localStorage.setItem('gameMuted', this.muted.toString());
+    }
+
+    /**
+     * Updates the mute button icon
+     */
+    updateMuteButton() {
+        const button = document.getElementById('mute-button');
+        if(button) {
+            button.innerHTML = this.muted ? '🔇' : '🔊';
+            button.title = this.muted ? 'Enable sound' : 'Disable sound';
+            button.setAttribute('aria-label', this.muted ? 'Enable sound' : 'Disable sound');
+        }
+    }
 }
