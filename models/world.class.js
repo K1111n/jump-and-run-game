@@ -114,99 +114,148 @@ class World {
      */
     checkCollisions() {
         if(!this.character.isDead()) {
-            let enemiesToDefeat = [];
-            let characterTookDamage = false;
-            
-            this.level.enemies.forEach((enemy) => {
-                if(this.character.isColliding(enemy) && !enemy.isDead) {
-                    let characterBox = this.character.getHitbox();
-                    let enemyBox = enemy.getHitbox();
-                    
-                    let isFalling = this.character.speedY < 0;
-                    let characterBottom = characterBox.y + characterBox.height;
-                    let enemyTop = enemyBox.y;
-                    let overlapY = characterBottom - enemyTop;
-                    
-                    let isJumpingOnEnemy = isFalling && 
-                                          overlapY >= 0 && 
-                                          overlapY <= 50;
-                    
-                    if(isJumpingOnEnemy) {
-                        enemiesToDefeat.push(enemy);
-                    } else if(!characterTookDamage) {
-                        this.character.hit();
-                        if (window.soundManager) {
-                            window.soundManager.play('hurt');
-                        }
-                        this.statusBar.setPercentage(this.character.energy);
-                        characterTookDamage = true;
-                    }
-                }
-            });
-            
-            if(enemiesToDefeat.length > 0) {
-                enemiesToDefeat.forEach(enemy => {
-                    enemy.killEnemy();
+            this.checkEnemyCollisions();
+            this.checkCoinCollisions();
+            this.checkBottleCollisions();
+        }
+        this.checkBottleEnemyCollisions();
+    }
+
+    /**
+     * checks collisions between character and enemies
+     */
+    checkEnemyCollisions() {
+        let enemiesToDefeat = [];
+        let characterTookDamage = false;
+        
+        this.level.enemies.forEach((enemy) => {
+            if(this.character.isColliding(enemy) && !enemy.isDead) {
+                if(this.isJumpKill(enemy)) {
+                    enemiesToDefeat.push(enemy);
+                } else if(!characterTookDamage && !this.character.invulnerable) {
+                    this.character.hit();
                     if (window.soundManager) {
-                        window.soundManager.play('enemyDefeated');
+                        window.soundManager.play('hurt');
                     }
-                });
-                this.character.speedY = 20; 
-                if (window.soundManager) {
-                    window.soundManager.play('jump');
+                    this.statusBar.setPercentage(this.character.energy);
+                    characterTookDamage = true;
                 }
             }
-            
-            this.level.enemies = this.level.enemies.filter(enemy => !enemy.markedForRemoval);
-            
-            this.level.coins = this.level.coins.filter(coin => {
-                if(this.character.isColliding(coin)) {
-                    this.character.collectCoin();
-                    this.coinBar.setPercentage(this.character.coins);
-                    return false;
+        });
+        
+        this.handleEnemyDefeats(enemiesToDefeat);
+    }
+
+    /**
+     * Checks if an enemy is killed by a jump
+     */
+    isJumpKill(enemy) {
+        let characterBox = this.character.getHitbox();
+        let enemyBox = enemy.getHitbox();
+        
+        let isFalling = this.character.speedY < 0;
+        let characterBottom = characterBox.y + characterBox.height;
+        let enemyTop = enemyBox.y;
+        let overlapY = characterBottom - enemyTop;
+        
+        return isFalling && overlapY >= 0 && overlapY <= 50;
+    }
+
+    /**
+     * Handles defeated enemies
+     */
+    handleEnemyDefeats(enemiesToDefeat) {
+        if(enemiesToDefeat.length > 0) {
+            enemiesToDefeat.forEach(enemy => {
+                enemy.killEnemy();
+                if (window.soundManager) {
+                    window.soundManager.play('enemyDefeated');
                 }
-                return true;
             });
-            
-            this.level.bottles = this.level.bottles.filter(bottle => {
-                if(this.character.isColliding(bottle)) {
-                    this.character.collectBottle();
-                    if (window.soundManager) {
-                        window.soundManager.play('bottle');
-                    }
-                    this.bottleBar.setPercentage(this.character.bottles);
-                    return false;
-                }
-                return true;
-            });
+            this.character.speedY = 20; 
+            if (window.soundManager) {
+                window.soundManager.play('jump');
+            }
         }
         
+        this.level.enemies = this.level.enemies.filter(enemy => !enemy.markedForRemoval);
+    }
+
+    /**
+     * Checks collisions with coins
+     */
+    checkCoinCollisions() {
+        this.level.coins = this.level.coins.filter(coin => {
+            if(this.character.isColliding(coin)) {
+                this.character.collectCoin();
+                this.coinBar.setPercentage(this.character.coins);
+                return false;
+            }
+            return true;
+        });
+    }
+
+    /**
+     * Checks collisions with bottles
+     */
+    checkBottleCollisions() {
+        this.level.bottles = this.level.bottles.filter(bottle => {
+            if(this.character.isColliding(bottle)) {
+                this.character.collectBottle();
+                if (window.soundManager) {
+                    window.soundManager.play('bottle');
+                }
+                this.bottleBar.setPercentage(this.character.bottles);
+                return false;
+            }
+            return true;
+        });
+    }
+
+    /**
+     * Checks collisions between thrown bottles and enemies
+     */
+    checkBottleEnemyCollisions() {
         let bottlesToRemove = [];
         
         this.throwableObjects.forEach((bottle, bottleIndex) => {
             this.level.enemies.forEach((enemy) => {
                 if(bottle.isColliding(enemy) && !enemy.isDead && !bottle.bottleSplash) {
-                    if(enemy instanceof Endboss) {
-                        enemy.hit();
-                        this.statusBarEndboss.setPercentage(enemy.energy * 4);
-                        if (window.soundManager) {
-                            window.soundManager.play('hurt');
-                        }
-                    } else {
-                        enemy.killEnemy();
-                        if (window.soundManager) {
-                            window.soundManager.play('enemyDefeated');
-                        }
-                    }
-                    
-                    bottle.splashBottle();
-                    if(!bottlesToRemove.includes(bottleIndex)) {
-                        bottlesToRemove.push(bottleIndex);
-                    }
+                    this.handleBottleHit(enemy, bottle, bottleIndex, bottlesToRemove);
                 }
             });
         });
         
+        this.removeUsedBottles(bottlesToRemove);
+    }
+
+    /**
+     * Handles hits from bottles on enemies
+     */
+    handleBottleHit(enemy, bottle, bottleIndex, bottlesToRemove) {
+        if(enemy instanceof Endboss) {
+            enemy.hit();
+            this.statusBarEndboss.setPercentage(enemy.energy * 4);
+            if (window.soundManager) {
+                window.soundManager.play('hurt');
+            }
+        } else {
+            enemy.killEnemy();
+            if (window.soundManager) {
+                window.soundManager.play('enemyDefeated');
+            }
+        }
+        
+        bottle.splashBottle();
+        if(!bottlesToRemove.includes(bottleIndex)) {
+            bottlesToRemove.push(bottleIndex);
+        }
+    }
+
+    /**
+     * Removes used bottles after a delay
+     */
+    removeUsedBottles(bottlesToRemove) {
         if(bottlesToRemove.length > 0) {
             setTimeout(() => {
                 this.throwableObjects = this.throwableObjects.filter((bottle, index) => {

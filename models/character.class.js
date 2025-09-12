@@ -46,6 +46,9 @@ class Character extends MovableObject {
      * @type {boolean} Was above ground in last frame
      */
     wasAboveGroundLastFrame = false;
+
+    invulnerable = false;
+    invulnerabilityDuration = 1500;
     
     IMAGES_WALKING = [
         './img/2_character_pepe/2_walk/W-21.png',
@@ -190,7 +193,7 @@ class Character extends MovableObject {
             }
             
             this.wasAboveGroundLastFrame = this.isAboveGround();
-        }, 500);
+        }, 200);
     }
 
     /**
@@ -207,11 +210,18 @@ class Character extends MovableObject {
      * processes a hit on the character
      */
     hit() {
-        this.energy -= 5;
+        if (this.invulnerable) return; 
+        
+        this.energy -= 20; 
         if(this.energy <= 0) {
             this.energy = 0;
         } else {
             this.lastHit = new Date().getTime();
+            this.invulnerable = true;
+            
+            setTimeout(() => {
+                this.invulnerable = false;
+            }, this.invulnerabilityDuration);
         }
     }
 
