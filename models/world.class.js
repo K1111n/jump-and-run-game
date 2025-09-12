@@ -126,15 +126,14 @@ class World {
                     
                     let isJumpingOnEnemy = isFalling && 
                                           overlapY >= 0 && 
-                                          overlapY <= 50 && 
-                                          this.character.isAboveGround();
+                                          overlapY <= 50;
                     
                     if(isJumpingOnEnemy) {
                         enemiesToDefeat.push(enemy);
                     } else if(!characterTookDamage) {
                         this.character.hit();
-                        if (soundManager) {
-                            soundManager.play('hurt');
+                        if (window.soundManager) {
+                            window.soundManager.play('hurt');
                         }
                         this.statusBar.setPercentage(this.character.energy);
                         characterTookDamage = true;
@@ -145,82 +144,76 @@ class World {
             if(enemiesToDefeat.length > 0) {
                 enemiesToDefeat.forEach(enemy => {
                     enemy.killEnemy();
-                    if (soundManager) {
-                        soundManager.play('enemyDefeated');
+                    if (window.soundManager) {
+                        window.soundManager.play('enemyDefeated');
                     }
                 });
-                this.character.speedY = 20;
-                if (soundManager) {
-                    soundManager.play('jump');
+                this.character.speedY = 20; 
+                if (window.soundManager) {
+                    window.soundManager.play('jump');
                 }
             }
             
             this.level.enemies = this.level.enemies.filter(enemy => !enemy.markedForRemoval);
-            let coinsToRemove = [];
-            this.level.coins.forEach((coin, index) => {
+            
+            this.level.coins = this.level.coins.filter(coin => {
                 if(this.character.isColliding(coin)) {
-                    coinsToRemove.push(index);
                     this.character.collectCoin();
-                    if (soundManager) {
-                        soundManager.play('coin');
+                    if (window.soundManager) {
+                        window.soundManager.play('coin');
                     }
+                    this.coinBar.setPercentage(this.character.coins);
+                    return false;
                 }
+                return true;
             });
             
-            for(let i = coinsToRemove.length - 1; i >= 0; i--) {
-                this.level.coins.splice(coinsToRemove[i], 1);
-            }
-            this.coinBar.setPercentage(this.character.coins);
-    
-            let bottlesToRemove = [];
-            this.level.bottles.forEach((bottle, index) => {
+            this.level.bottles = this.level.bottles.filter(bottle => {
                 if(this.character.isColliding(bottle)) {
-                    bottlesToRemove.push(index);
                     this.character.collectBottle();
-                    if (soundManager) {
-                        soundManager.play('bottle');
+                    if (window.soundManager) {
+                        window.soundManager.play('bottle');
                     }
+                    this.bottleBar.setPercentage(this.character.bottles);
+                    return false;
                 }
+                return true;
             });
-            
-            for(let i = bottlesToRemove.length - 1; i >= 0; i--) {
-                this.level.bottles.splice(bottlesToRemove[i], 1);
-            }
-            this.bottleBar.setPercentage(this.character.bottles);
         }
         
-        let throwablesToRemove = [];
+        let bottlesToRemove = [];
+        
         this.throwableObjects.forEach((bottle, bottleIndex) => {
             this.level.enemies.forEach((enemy) => {
                 if(bottle.isColliding(enemy) && !enemy.isDead && !bottle.bottleSplash) {
                     if(enemy instanceof Endboss) {
                         enemy.hit();
                         this.statusBarEndboss.setPercentage(enemy.energy * 4);
-                        if (soundManager) {
-                            soundManager.play('hurt');
+                        if (window.soundManager) {
+                            window.soundManager.play('hurt');
                         }
                     } else {
                         enemy.killEnemy();
-                        if (soundManager) {
-                            soundManager.play('enemyDefeated');
+                        if (window.soundManager) {
+                            window.soundManager.play('enemyDefeated');
                         }
                     }
                     
                     bottle.splashBottle();
-                    if(!throwablesToRemove.includes(bottleIndex)) {
-                        throwablesToRemove.push(bottleIndex);
+                    if(!bottlesToRemove.includes(bottleIndex)) {
+                        bottlesToRemove.push(bottleIndex);
                     }
                 }
             });
         });
         
-        setTimeout(() => {
-            for(let i = throwablesToRemove.length - 1; i >= 0; i--) {
-                if(this.throwableObjects[throwablesToRemove[i]]) {
-                    this.throwableObjects.splice(throwablesToRemove[i], 1);
-                }
-            }
-        }, 500);
+        if(bottlesToRemove.length > 0) {
+            setTimeout(() => {
+                this.throwableObjects = this.throwableObjects.filter((bottle, index) => {
+                    return !bottlesToRemove.includes(index);
+                });
+            }, 500);
+        }
     }
 
     /**
