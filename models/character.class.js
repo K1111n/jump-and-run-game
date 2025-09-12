@@ -31,6 +31,21 @@ class Character extends MovableObject {
      * @type {boolean} Indicates if death animation is complete
      */
     deathAnimationComplete = false;
+
+    /**
+     * @type {boolean} Track if jump animation has started
+     */
+    jumpAnimationStarted = false;
+
+    /**
+     * @type {number} Jump animation frame counter
+     */
+    jumpAnimationFrame = 0;
+
+    /**
+     * @type {boolean} Was above ground in last frame
+     */
+    wasAboveGroundLastFrame = false;
     
     IMAGES_WALKING = [
         './img/2_character_pepe/2_walk/W-21.png',
@@ -139,6 +154,8 @@ class Character extends MovableObject {
                 if(this.world.keyboard.UP && !this.isAboveGround()) {
                     this.jump();
                     this.lastMovement = new Date().getTime();
+                    this.jumpAnimationStarted = true;
+                    this.jumpAnimationFrame = 0;
                 }
             }
 
@@ -146,6 +163,11 @@ class Character extends MovableObject {
         }, 1000 / 60);
 
         setInterval(() => {
+            if (this.wasAboveGroundLastFrame && !this.isAboveGround()) {
+                this.jumpAnimationStarted = false;
+                this.jumpAnimationFrame = 0;
+            }
+            
             if(this.isDead()) {       
                 if(!this.deathAnimationComplete) {
                     this.playAnimation(this.IMAGES_DEAD);
@@ -158,7 +180,7 @@ class Character extends MovableObject {
             } else if(this.isHurt()) {                
                 this.playAnimation(this.IMAGES_HURT); 
             } else if(this.isAboveGround()) {
-                this.playAnimation(this.IMAGES_JUMPING);   
+                this.playJumpAnimationOnce();
             } else if(this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
                 this.playAnimation(this.IMAGES_WALKING);
             } else if(this.isSleeping()) {
@@ -166,6 +188,8 @@ class Character extends MovableObject {
             } else {
                 this.playAnimation(this.IMAGES_IDLE);
             }
+            
+            this.wasAboveGroundLastFrame = this.isAboveGround();
         }, 50);
     }
 
@@ -227,6 +251,37 @@ class Character extends MovableObject {
         this.bottles++;
         if(this.bottles > 5) {
             this.bottles = 5;
+        }
+    }
+
+    /**
+     * Plays jump animation only once per jump
+     */
+    playJumpAnimationOnce() {
+        if (this.jumpAnimationStarted && this.jumpAnimationFrame < this.IMAGES_JUMPING.length) {
+            let frameIndex = Math.floor(this.jumpAnimationFrame);
+            if (frameIndex < this.IMAGES_JUMPING.length) {
+                this.img = this.imageCache[this.IMAGES_JUMPING[frameIndex]];
+            }
+            
+            this.jumpAnimationFrame += 0.3; 
+        } else if (!this.jumpAnimationStarted) {
+            this.img = this.imageCache[this.IMAGES_JUMPING[0]];
+        }
+        else {
+            this.img = this.imageCache[this.IMAGES_JUMPING[this.IMAGES_JUMPING.length - 1]];
+        }
+    }
+
+    /**
+     * makes the object jump - override to reset animation
+     */
+    jump() {
+        this.speedY = 30;
+        this.jumpAnimationStarted = true;
+        this.jumpAnimationFrame = 0;
+        if (window.soundManager) {
+            window.soundManager.play('jump');
         }
     }
 }
