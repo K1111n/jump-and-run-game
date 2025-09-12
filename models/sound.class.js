@@ -109,7 +109,7 @@ class Sounds {
      * Updates the mute button icon
      */
     updateMuteButton() {
-        const button = document.getElementById('mute-button');
+        const button = document.getElementById('mute-btn');
         if(button) {
             button.innerHTML = this.muted ? '🔇' : '🔊';
             button.title = this.muted ? 'Enable sound' : 'Disable sound';

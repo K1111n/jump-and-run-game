@@ -26,7 +26,7 @@ class MovableObject extends DrawableObject {
     /**
      * @type {number} Energy/Health
      */
-    energy = 300;
+    energy = 100;
 
     /**
      * @type {number} Number of collected coins

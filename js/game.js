@@ -390,7 +390,7 @@ function checkOrientation() {
             if(orientationMsg) orientationMsg.style.display = 'none';
             if(canvas) {
                 canvas.style.display = 'block';
-                const gameAspectRatio = 720 / 480; // 1.5
+                const gameAspectRatio = 720 / 480;
                 const screenAspectRatio = window.innerWidth / window.innerHeight;
                         
                 let canvasWidth, canvasHeight;

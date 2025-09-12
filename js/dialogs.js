@@ -70,7 +70,29 @@ function initMuteButton() {
         });
         
         if (soundManager) {
-            muteBtn.textContent = soundManager.muted ? '🔇' : '🔊';
+            soundManager.updateMuteButton();
         }
+    }
+}
+
+/**
+ * Enables mobile controls (responsive design mode)
+ */
+function enableMobileControls() {
+    const mobileControls = document.getElementById('mobile-controls');
+    if (mobileControls) {
+        mobileControls.classList.remove('mobile-controls-hidden');
+        mobileControls.classList.add('force-show');
+    }
+}
+
+/**
+ * Disables mobile controls (desktop design mode)
+ */
+function disableMobileControls() {
+    const mobileControls = document.getElementById('mobile-controls');
+    if (mobileControls) {
+        mobileControls.classList.add('mobile-controls-hidden');
+        mobileControls.classList.remove('force-show');
     }
 }

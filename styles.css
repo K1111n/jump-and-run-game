@@ -33,7 +33,7 @@ dialog {
     padding: 0;
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
     background: transparent;
-    margin-top: 247px;
+    margin-top: 262px;
     font-family: Arial, Helvetica, sans-serif;
     text-align: center;
 }
@@ -63,6 +63,32 @@ dialog::backdrop {
     padding: 30px;
     text-align: center;
 }
+
+.responsiveButton,
+.desktopButton {
+    padding: 10px 20px;
+    margin: 0 10px;
+    background: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.desktopButton {
+    background: #2196F3;
+}
+
+.responsiveButton:hover {
+    background: #45a049;
+}
+
+.desktopButton:hover {
+    background: #0b7dda;
+}
+
 
 .controls-info {
     background: rgba(0, 0, 0, 0.1);
@@ -115,12 +141,51 @@ dialog::backdrop {
 #mobile-controls {
     position: fixed;
     bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    display: none;
-    z-index: 1000;
+    left: 0;
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding: 0 20px 20px 20px;
+    pointer-events: none;
+    z-index: 10;
+    box-sizing: border-box;
 }
 
+.mobile-controls-hidden {
+    display: none !important;
+}
+
+.left-controls,
+.right-controls {
+    pointer-events: auto;
+}
+
+.left-controls {
+    display: flex;
+    align-items: flex-end;
+}
+
+.movement-pad {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    background: rgba(0, 0, 0, 0.5);
+    padding: 15px;
+    border-radius: 15px;
+}
+
+.horizontal-controls {
+    display: flex;
+    gap: 10px;
+}
+
+.right-controls {
+    display: flex;
+    align-items: flex-end;
+}
 
 @media only screen and (min-width: 1024px) {
     body {
@@ -156,12 +221,15 @@ dialog::backdrop {
     }
 
     #mobile-controls {
-        display: block !important;
+        display: flex !important;
         position: fixed;
         bottom: 10px;
-        left: 50%;
-        transform: translateX(-50%);
-        z-index: 1000;
+        left: 0;
+        width: 100%;
+        justify-content: space-between;
+        align-items: flex-end;
+        padding: 0 20px 10px 20px;
+        z-index: 10;
     }
 }
 
@@ -195,6 +263,65 @@ dialog::backdrop {
     }
 }
 
+@media only screen and (min-width: 1024px) {
+    #mobile-controls {
+        display: none;
+    }
+
+    #mobile-controls.force-show {
+        display: flex !important;
+    }
+}
+
+@media only screen and (max-width: 480px) {
+    #mobile-controls {
+        bottom: 10px;
+        padding: 0 10px 10px 10px;
+    }
+
+    .movement-pad {
+        padding: 10px;
+        gap: 8px;
+    }
+
+    .control-btn {
+        width: 50px;
+        height: 50px;
+        font-size: 20px;
+    }
+
+    .action-btn {
+        width: 65px;
+        height: 65px;
+        font-size: 28px;
+    }
+}
+
+@media only screen and (max-width: 360px) {
+    #mobile-controls {
+        bottom: 5px;
+        padding: 0 5px 5px 5px;
+    }
+
+    .control-btn {
+        width: 45px;
+        height: 45px;
+        font-size: 18px;
+    }
+
+    .action-btn {
+        width: 60px;
+        height: 60px;
+        font-size: 24px;
+    }
+
+    .movement-pad {
+        padding: 8px;
+        gap: 6px;
+    }
+}
+
+
 .control-pad {
     display: flex;
     gap: 10px;
@@ -214,11 +341,26 @@ dialog::backdrop {
     touch-action: none;
     user-select: none;
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .control-btn:active {
     background: rgba(255, 255, 255, 0.4);
     transform: scale(0.95);
+}
+
+.jump-btn {
+    background: rgba(76, 175, 80, 0.3);
+}
+
+.action-btn {
+    width: 80px;
+    height: 80px;
+    font-size: 32px;
+    background: rgba(244, 67, 54, 0.3);
+    border-radius: 50%;
 }
 
 .mute-button {
@@ -257,6 +399,7 @@ dialog::backdrop {
     text-align: center;
     color: white;
     padding: 20px;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 .orientation-content h2 {

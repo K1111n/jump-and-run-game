@@ -37,8 +37,8 @@
     <h1>El pollo loco</h1>
 
     <section>
-        <!-- <button class="responsiveButton">Responsive Design</button>
-        <button class="desktopButton">Desktop Design</button> -->
+        <button class="responsiveButton" onclick="enableMobileControls()">Responsive Design</button>
+        <button class="desktopButton" onclick="disableMobileControls()">Desktop Design</button>
         <button id="mute-btn" class="mute-button">🔊</button>
     </section>
 
@@ -64,14 +64,20 @@
         </div>
     </div>
     
-    <div id="mobile-controls">
-        <div class="control-pad">
-            <button class="control-btn" id="left-btn" ontouchstart="event.preventDefault()">←</button>
-            <button class="control-btn" id="right-btn" ontouchstart="event.preventDefault()">→</button>
-            <button class="control-btn" id="jump-btn" ontouchstart="event.preventDefault()">↑</button>
-            <button class="control-btn" id="throw-btn" ontouchstart="event.preventDefault()">🍾</button>
+<div id="mobile-controls" class="mobile-controls-hidden">
+    <div class="left-controls">
+        <div class="movement-pad">
+            <button class="control-btn jump-btn" id="jump-btn" ontouchstart="event.preventDefault()">↑</button>
+            <div class="horizontal-controls">
+                <button class="control-btn" id="left-btn" ontouchstart="event.preventDefault()">←</button>
+                <button class="control-btn" id="right-btn" ontouchstart="event.preventDefault()">→</button>
+            </div>
         </div>
     </div>
+     <div class="right-controls">
+        <button class="control-btn action-btn" id="throw-btn" ontouchstart="event.preventDefault()">🍾</button>
+    </div>
+</div>
 
     <dialog id="pauseDialog">
         <div class="dialog-content" style="padding: 40px; background: #2c3e50; border-radius: 15px;">
