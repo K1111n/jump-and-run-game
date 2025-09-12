@@ -88,7 +88,8 @@ dialog::backdrop {
     cursor: pointer;
     transition: all 0.3s ease;
     font-weight: bold;
-    margin: 10px;
+    display: inline-block;
+    margin: 0 20px;
 }
 
 .game-button:hover {
