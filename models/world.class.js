@@ -159,9 +159,6 @@ class World {
             this.level.coins = this.level.coins.filter(coin => {
                 if(this.character.isColliding(coin)) {
                     this.character.collectCoin();
-                    if (window.soundManager) {
-                        window.soundManager.play('coin');
-                    }
                     this.coinBar.setPercentage(this.character.coins);
                     return false;
                 }

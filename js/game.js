@@ -71,6 +71,7 @@ function initGameFeatures() {
     initMuteButton();
 
     soundManager = new Sounds();
+    window.soundManager = soundManager; 
     gameController = new Controller();
 }
 
