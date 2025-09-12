@@ -24,6 +24,7 @@ class Sounds {
         this.sounds.backgroundmusic.loop = true;
         this.sounds.backgroundmusic.volume = 0.1; 
     }
+    // this.updateMuteButton();
     }
 
     /**
@@ -79,6 +80,8 @@ class Sounds {
      */
     toggleMute() {
         this.muted = !this.muted;
+        // this.saveMuteStatus(); 
+        // this.updateMuteButton();
         if (this.muted) {
             this.pauseBackgroundMusic();
         } else {
@@ -86,49 +89,32 @@ class Sounds {
         }
     }
 
-      /**
-     * loads the Mute-Status from localStorage
-     * @returns {boolean} Mute-Status
-     */
-      loadMuteStatus() {
-        const stored = localStorage.getItem('gameMuted');
-        return stored === 'true';
-    }
+//       /**
+//      * loads the Mute-Status from localStorage
+//      * @returns {boolean} Mute-Status
+//      */
+//       loadMuteStatus() {
+//         const stored = localStorage.getItem('gameMuted');
+//         return stored === 'true';
+//     }
     
-    /**
-     * saves the Mute-Status to localStorage
-     */
-    saveMuteStatus() {
-        localStorage.setItem('gameMuted', this.isMuted.toString());
-    }
+//     /**
+//      * saves the Mute-Status to localStorage
+//      */
+//     saveMuteStatus() {
+//         localStorage.setItem('gameMuted', this.muted.toString());
+//     }
     
-    /**
-     * Creates the mute button
-     */
-    createMuteButton() {
-        // Check if button already exists
-        let button = document.getElementById('mute-button');
-        
-        if (!button) {
-            button = document.createElement('button');
-            button.id = 'mute-button';
-            button.className = 'mute-button';
-            document.body.appendChild(button);
-        }
-        
-        button.onclick = () => this.toggleMute();
-        this.updateMuteButton();
-    }
-    
-    /**
-     * Updates the mute button icon
-     */
-    updateMuteButton() {
-        const button = document.getElementById('mute-button');
-        if(button) {
-            button.innerHTML = this.isMuted ? '🔇' : '🔊';
-            button.title = this.isMuted ? 'Enable sound' : 'Disable sound';
-            button.setAttribute('aria-label', this.isMuted ? 'Enable sound' : 'Disable sound');
-        }
-    }
+//     /**
+//      * Updates the mute button icon
+//      */
+//     updateMuteButton() {
+//         const button = document.getElementById('mute-button');
+//         if(button) {
+//             button.innerHTML = this.isMuted ? '🔇' : '🔊';
+//             button.title = this.isMuted ? 'Enable sound' : 'Disable sound';
+//             button.setAttribute('aria-label', this.isMuted ? 'Enable sound' : 'Disable sound');
+//         }
+//     }
+// 
 }

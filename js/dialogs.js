@@ -59,3 +59,18 @@ document.addEventListener('keydown', (e) => {
         }
     }
 });
+
+function initMuteButton() {
+    const muteBtn = document.getElementById('mute-btn');
+    if (muteBtn) {
+        muteBtn.addEventListener('click', () => {
+            if (soundManager) {
+                soundManager.toggleMute();
+            }
+        });
+        
+        if (soundManager) {
+            muteBtn.textContent = soundManager.muted ? '🔇' : '🔊';
+        }
+    }
+}

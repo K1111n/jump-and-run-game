@@ -6,7 +6,7 @@ class Chicken extends MovableObject {
     /**
      * @type {number} Y position
      */
-    y = 340;
+    y = 360;
 
     /**
      * @type {number} Height
