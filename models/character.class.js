@@ -47,6 +47,11 @@ class Character extends MovableObject {
      */
     wasAboveGroundLastFrame = false;
 
+    /**
+     * @type {boolean} Track if character just landed
+     */
+    justLanded = false;
+
     invulnerable = false;
     invulnerabilityDuration = 1500;
     
@@ -140,60 +145,118 @@ class Character extends MovableObject {
      * starts character animations
      */
     animate() {
+        this.startMovementLoop();
+        this.startAnimationLoop();
+    }
+
+    /**
+     * Handles character movement and camera positioning
+     */
+    startMovementLoop() {
         setInterval(() => {
             if(!this.isDead()) {
-                if(this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
-                    this.moveRight();
-                    this.otherDirection = false;
-                    this.lastMovement = new Date().getTime();
-                }
-
-                if(this.world.keyboard.LEFT && this.x > 0) {
-                    this.moveLeft();
-                    this.otherDirection = true;
-                    this.lastMovement = new Date().getTime();
-                }
-
-                if(this.world.keyboard.UP && !this.isAboveGround()) {
-                    this.jump();
-                    this.lastMovement = new Date().getTime();
-                    this.jumpAnimationStarted = true;
-                    this.jumpAnimationFrame = 0;
-                }
+                this.handleMovement();
             }
-
-            this.world.camera_x = -this.x + 100;
+            this.updateCamera();
         }, 1000 / 60);
+    }
 
+    /**
+     * Handles character animation state changes
+     */
+    startAnimationLoop() {
         setInterval(() => {
-            if (this.wasAboveGroundLastFrame && !this.isAboveGround()) {
-                this.jumpAnimationStarted = false;
-                this.jumpAnimationFrame = 0;
+            this.handleJumpState();
+            this.selectAndPlayAnimation();
+        }, 150);
+    }
+
+    /**
+     * Handles character movement input
+     */
+    handleMovement() {
+        if(this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
+            this.moveRight();
+            this.otherDirection = false;
+            this.lastMovement = new Date().getTime();
+        }
+
+        if(this.world.keyboard.LEFT && this.x > 0) {
+            this.moveLeft();
+            this.otherDirection = true;
+            this.lastMovement = new Date().getTime();
+        }
+
+        if(this.world.keyboard.UP && !this.isAboveGround()) {
+            this.jump();
+            this.lastMovement = new Date().getTime();
+        }
+    }
+
+    /**
+     * Updates camera position based on character position
+     */
+    updateCamera() {
+        this.world.camera_x = -this.x + 100;
+    }
+
+    /**
+     * Handles jump state transitions and animation
+     */
+    handleJumpState() {
+        if (this.wasAboveGroundLastFrame && !this.isAboveGround() && this.jumpAnimationStarted) {
+            this.jumpAnimationStarted = false;
+            this.jumpAnimationFrame = 0;
+            this.justLanded = true;
+        }
+        
+        this.wasAboveGroundLastFrame = this.isAboveGround();
+    }
+
+    /**
+     * Selects and plays the appropriate animation based on character state
+     */
+    selectAndPlayAnimation() {
+        if(this.isDead()) {       
+            this.handleDeathAnimation();
+        } else if(this.isHurt()) {                
+            this.playAnimation(this.IMAGES_HURT); 
+        } else if(this.isAboveGround() && this.jumpAnimationStarted) {
+            this.playJumpAnimation();
+        } else if(this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
+            this.playAnimation(this.IMAGES_WALKING);
+        } else if(this.isSleeping()) {
+            this.playAnimation(this.IMAGES_SLEEPING);
+        } else {
+            this.playAnimation(this.IMAGES_IDLE);
+        }
+    }
+
+    /**
+     * Handles death animation progression
+     */
+    handleDeathAnimation() {
+        if(!this.deathAnimationComplete) {
+            this.playAnimation(this.IMAGES_DEAD);
+            let i = this.currentImage % this.IMAGES_DEAD.length;
+            if(i === this.IMAGES_DEAD.length - 1) {
+                this.deathAnimationComplete = true;
+                this.loadImage(this.IMAGES_DEAD[this.IMAGES_DEAD.length - 1]);
             }
-            
-            if(this.isDead()) {       
-                if(!this.deathAnimationComplete) {
-                    this.playAnimation(this.IMAGES_DEAD);
-                    let i = this.currentImage % this.IMAGES_DEAD.length;
-                    if(i === this.IMAGES_DEAD.length - 1) {
-                        this.deathAnimationComplete = true;
-                        this.loadImage(this.IMAGES_DEAD[this.IMAGES_DEAD.length - 1]);
-                    }
-                }
-            } else if(this.isHurt()) {                
-                this.playAnimation(this.IMAGES_HURT); 
-            } else if(this.isAboveGround()) {
-                this.playJumpAnimationOnce();
-            } else if(this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
-                this.playAnimation(this.IMAGES_WALKING);
-            } else if(this.isSleeping()) {
-                this.playAnimation(this.IMAGES_SLEEPING);
-            } else {
-                this.playAnimation(this.IMAGES_IDLE);
-            }
-            
-            this.wasAboveGroundLastFrame = this.isAboveGround();
-        }, 200);
+        }
+    }
+
+    /**
+     * Plays jump animation with proper progression
+     */
+    playJumpAnimation() {
+        if (this.jumpAnimationFrame < this.IMAGES_JUMPING.length) {
+            let frameIndex = Math.floor(this.jumpAnimationFrame);
+            this.img = this.imageCache[this.IMAGES_JUMPING[frameIndex]];
+            this.jumpAnimationFrame += 0.6; 
+        } else {
+            this.img = this.imageCache[this.IMAGES_JUMPING[this.IMAGES_JUMPING.length - 1]];
+        }
     }
 
     /**
