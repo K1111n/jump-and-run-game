@@ -90,15 +90,22 @@ class Endboss extends MovableObject {
     }
 
     /**
-     * Animates the endboss by moving and changing its image based on its state.
-     */
+    * Animates the endboss by moving and changing its image based on its state.
+    */
     animate() {
         setInterval(() => {
             if (!this.isDead) {
                 this.moveLeft();
             }
         }, 1000 / 60);
-        
+    
+        setInterval(() => {
+            if (!this.isDead) {
+                this.jump();
+            }
+        }, 5000); 
+        this.applyGravity();
+    
         setInterval(() => {
             if (this.isDead) {
                 this.playAnimation(this.IMAGES_DEAD);
@@ -136,5 +143,23 @@ class Endboss extends MovableObject {
                 this.markedForRemoval = true;
             }, 2000);
         }
+    }
+
+    /**
+    * Makes the endboss jump
+    */
+    jump() {
+        if (!this.isAboveGround()) {
+            this.speedY = 25; 
+            this.lastJump = new Date().getTime(); 
+        }
+    }
+
+    /**
+    * Checks if the endboss is above ground (customized for endboss size)
+    * @returns {boolean} True if above ground
+    */
+    isAboveGround() {
+        return this.y < 55; 
     }
 }
