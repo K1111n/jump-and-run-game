@@ -7,6 +7,7 @@
     <title>El pollo loco</title>
     <link rel="icon" type="image/x-icon" href="./img/desert.jpg">
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="mediastyles.css">
     <script src="./models/drawable-object.class.js"></script>
     <script src="./models/movable-object.class.js"></script>
     <script src="./models/character.class.js"></script>
@@ -82,7 +83,7 @@
 </div>
 
     <dialog id="pauseDialog">
-        <div class="dialog-content" style="padding: 40px; background: #2c3e50; border-radius: 15px;">
+        <div class="dialog-content">
             <h2 style="color: white; margin-bottom: 20px;">GAME PAUSED</h2>
             <button class="game-button" id="resume-btn">Resume</button>
             <button class="game-button" id="quit-btn" style="background: #F44336;">Quit to Menu</button>
@@ -90,7 +91,7 @@
     </dialog>
 
     <dialog id="controlsDialog">
-        <div class="dialog-content" style="background: #2c3e50; padding: 40px; border-radius: 15px; min-width: 400px;">
+        <div class="dialog-content">
             <h2 style="color: white; margin-bottom: 30px; font-family: Arial, sans-serif; text-align: center;">CONTROLS</h2>
             <div style="color: white; font-size: 18px; line-height: 2;">
                 <p>⬅️  - Move Left</p>
@@ -123,16 +124,16 @@
     </dialog>
 
     <dialog id="impressumDialog">
-        <div class="dialog-content" style="background: #2c3e50; padding: 40px; border-radius: 15px; max-width: 600px; max-height: 80vh; overflow-y: auto;">
+        <div class="dialog-content">
             <button class="close-btn" onclick="closeImpressum()" style="position: absolute; top: 10px; right: 10px; background: #F44336; color: white; border: none; border-radius: 50%; width: 30px; height: 30px; cursor: pointer; font-size: 20px;">×</button>
-            
+        
             <h1 style="color: white; margin-bottom: 20px;">Impressum</h1>
             <p style="color: white; line-height: 1.6;">
                 Kajanan Yoganathan<br />
                 Hugo-Küchingstraße, 6<br />
                 59067 Hamm
             </p>
-            
+        
             <h2 style="color: white; margin-top: 30px; margin-bottom: 15px;">Kontakt</h2>
             <p style="color: white; line-height: 1.6;">
                 Telefon: 01511111111<br />

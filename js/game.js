@@ -91,8 +91,10 @@ function init() {
     initGameFeatures();
     pauseAllAnimations();
 
-    if (startDialog) {
-        startDialog.showModal();
+    if (!isOrientationMessageVisible()) {
+        if (startDialog) {
+            startDialog.showModal();
+        }
     }
     
     window.addEventListener('keydown', handleEnterStart);

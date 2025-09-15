@@ -42,6 +42,12 @@ function handleDesktopOrientation() {
     setupDesktopCanvas(elements);
     showTitle(elements);
     enableBodyScroll();
+
+    if (!gameStarted && !gameEnded) {
+        if (startDialog && !startDialog.open) {
+            startDialog.showModal();
+        }
+    }
 }
 
 /**
@@ -70,6 +76,9 @@ function getOrientationElements() {
  */
 function showPortraitMessage() {
     const elements = getOrientationElements();
+    if (startDialog && startDialog.open) {
+        startDialog.close();
+    }
     
     showElement(elements.orientationMsg);
     hideElement(elements.canvas);
@@ -88,6 +97,11 @@ function showLandscapeMode() {
     showMobileControls(elements);
     hideTitle(elements);
     disableBodyScroll();
+    if (!gameStarted && !gameEnded) {
+        if (startDialog && !startDialog.open) {
+            startDialog.showModal();
+        }
+    }
 }
 
 /**
@@ -221,3 +235,12 @@ window.addEventListener('orientationchange', () => {
     setTimeout(checkOrientation, 100); 
 });
 window.addEventListener('resize', checkOrientation);
+
+/**
+ * Checks if the orientation message is visible
+ * @returns {boolean} true if orientation message is visible, false otherwise
+ */
+function isOrientationMessageVisible() {
+    const orientationMsg = document.getElementById('orientation-message');
+    return orientationMsg && orientationMsg.style.display !== 'none';
+}
