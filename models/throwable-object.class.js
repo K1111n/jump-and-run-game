@@ -24,7 +24,7 @@ class ThrowableObject extends MovableObject {
      * @param {number} x - X position of the bottle
      * @param {number} y - Y position of the bottle
      */
-    constructor(x, y) {
+    constructor(x, y,  direction = 1) {
         super().loadImage('./img/6_salsa_bottle/bottle_rotation/1_bottle_rotation.png');
         this.loadImages(this.IMAGES_BOTTLE_ROTATION);
         this.loadImages(this.IMAGES_BOTTLE_SPLASH);
@@ -33,6 +33,7 @@ class ThrowableObject extends MovableObject {
         this.width = 50;
         this.height = 60;
         this.bottleSplash = false;
+        this.throwDirection = direction;
         this.throw();
     }
 
@@ -45,7 +46,7 @@ class ThrowableObject extends MovableObject {
         this.animate();
         setInterval(() => {
             if(!this.bottleSplash) {
-                this.x += 5;
+                this.x += 5 * this.throwDirection;
             }
         }, 1000 / 60);
     }
