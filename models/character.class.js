@@ -322,8 +322,8 @@ class Character extends MovableObject {
      */
     collectBottle() {
         this.bottles++;
-        if(this.bottles > 5) {
-            this.bottles = 5;
+        if(this.bottles > 9) {
+            this.bottles = 9;
         }
     }
 

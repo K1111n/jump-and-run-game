@@ -142,27 +142,67 @@ function initGame() {
 }
 
 /**
+ * Checks if character is dead
+ */
+function checkCharacterDeath() {
+    if (world.character.isDead() && world.character.deathAnimationComplete) {
+        gameEnded = true;
+        clearInterval(statusInterval);
+        setTimeout(() => {
+            showEndDialog(false);
+        }, 1000);
+        return true;
+    }
+    return false;
+}
+
+/**
+ * Checks if endboss is dead (victory condition)
+ */
+function checkEndbossVictory() {
+    let endboss = world.level.enemies.find(enemy => enemy instanceof Endboss);
+    if (endboss && endboss.isDead) {
+        gameEnded = true;
+        clearInterval(statusInterval);
+        setTimeout(() => {
+            showEndDialog(true);
+        }, 1000);
+        return true;
+    }
+    return false;
+}
+
+/**
+ * Checks if new bottles need to be spawned
+ */
+function checkBottleRespawn() {
+    let remainingBottles = world.level.bottles.length;
+    let characterBottles = world.character.bottles;
+    if (remainingBottles < 3 && characterBottles < 9) {
+        spawnNewBottle();
+    }
+}
+
+/**
+ * Spawns a new bottle at a random location
+ */
+function spawnNewBottle() {
+    let newBottle = new Bottles();
+    newBottle.x = 200 + Math.random() * (world.level.level_end_x - 400);
+    world.level.bottles.push(newBottle);
+}
+
+
+/**
  * continually checks the game status for win/loss conditions
  */
 function checkGameStatus() {
     statusInterval = setInterval(() => {
         if (!gameEnded && world && world.character) {
-            if (world.character.isDead() && world.character.deathAnimationComplete) {
-                gameEnded = true;
-                clearInterval(statusInterval);
-                setTimeout(() => {
-                    showEndDialog(false);
-                }, 1000);
-            }
             
-            let endboss = world.level.enemies.find(enemy => enemy instanceof Endboss);
-            if (endboss && endboss.isDead) {
-                gameEnded = true;
-                clearInterval(statusInterval);
-                setTimeout(() => {
-                    showEndDialog(true);
-                }, 1000);
-            }
+            if (checkCharacterDeath()) return;
+            if (checkEndbossVictory()) return;
+            checkBottleRespawn(); 
         }
     }, 100);
 }
@@ -263,7 +303,6 @@ function restartGame() {
             new Coin(),
         ],
         [
-            new Bottles(),
             new Bottles(),
             new Bottles(),
             new Bottles(),
