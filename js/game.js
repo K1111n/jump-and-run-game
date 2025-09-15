@@ -257,6 +257,9 @@ function restartGame() {
             new Bottles(),
             new Bottles(),
             new Bottles(),
+            new Bottles(),
+            new Bottles(),
+            new Bottles(),
         ]
     );
     
