@@ -66,10 +66,13 @@ class World {
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
         this.canvas = canvas;
-        this.keyboard = keyboard
+        this.keyboard = keyboard;
+        this.pauseAnimations = false;
+        this.level = level1;
         this.draw();
         this.setWorld();
         this.run();
+        this.startEnemyAnimations();
     }
 
     /**
@@ -77,6 +80,17 @@ class World {
      */
     setWorld() {
         this.character.world = this;
+    }
+
+    /**
+     * starts animations for all enemies in the level
+     */
+    startEnemyAnimations() {
+        this.level.enemies.forEach(enemy => {
+            if (!enemy.animationStarted) {
+                enemy.animate();
+            }
+        });
     }
   
     /**
@@ -273,6 +287,10 @@ class World {
      * main draw method
      */
     draw() {
+        if (this.pauseAnimations) {
+            return;
+        }
+
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
         this.ctx.translate(this.camera_x, 0);

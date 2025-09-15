@@ -89,6 +89,7 @@ function init() {
     
     checkOrientation(); 
     initGameFeatures();
+    pauseAllAnimations();
 
     if (startDialog) {
         startDialog.showModal();
@@ -121,6 +122,7 @@ function handleEnterStart(event) {
 function startGame() {
     window.removeEventListener('keydown', handleEnterStart);
     startDialog.close();
+    resumeAllAnimations(); 
     gameStarted = true;
     gameEnded = false;
     if (soundManager) {
@@ -175,6 +177,13 @@ function restartGame() {
     if (soundManager) {
         soundManager.stopBackgroundMusic();
     }
+    if (world && world.level && world.level.enemies) {
+        world.level.enemies.forEach(enemy => {
+            if (enemy.cleanup) {
+                enemy.cleanup();
+            }
+        });
+    }
 
     world = null;
     gameStarted = false;
@@ -182,6 +191,8 @@ function restartGame() {
     keyboard = new Keyboard();
     
     ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    pauseAllAnimations();
 
     level1 = new Level(
         [
@@ -263,9 +274,7 @@ function restartGame() {
         ]
     );
     
-    
     startDialog.showModal();
-    
     window.addEventListener('keydown', handleEnterStart);
 }
 

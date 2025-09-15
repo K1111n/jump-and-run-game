@@ -17,6 +17,7 @@ function closeControls() {
  * @param {boolean} won 
  */
 function showEndDialog(won) {
+    pauseAllAnimations(); 
     if (world) {
         world = null;
     }
@@ -94,5 +95,23 @@ function disableMobileControls() {
     if (mobileControls) {
         mobileControls.classList.add('mobile-controls-hidden');
         mobileControls.classList.remove('force-show');
+    }
+}
+
+
+let animationsPaused = false;
+let pausedIntervals = [];
+
+function pauseAllAnimations() {
+    animationsPaused = true;
+    if (world) {
+        world.pauseAnimations = true;
+    }
+}
+
+function resumeAllAnimations() {
+    animationsPaused = false;
+    if (world) {
+        world.pauseAnimations = false;
     }
 }

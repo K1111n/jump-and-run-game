@@ -86,39 +86,54 @@ class Endboss extends MovableObject {
         this.loadImages(this.IMAGES_DEAD);
         this.x = 4000;
         this.speed = 0.5;
-        this.animate();
+        
+        this.animationStarted = false;
     }
 
     /**
     * Animates the endboss by moving and changing its image based on its state.
     */
     animate() {
-        setInterval(() => {
-            if (!this.isDead) {
+        this.animationStarted = true;
+        
+        this.movementInterval = setInterval(() => {
+            if (!this.isDead && !animationsPaused) {
                 this.moveLeft();
             }
         }, 1000 / 60);
-    
-        setInterval(() => {
-            if (!this.isDead) {
+
+        this.jumpInterval = setInterval(() => {
+            if (!this.isDead && !animationsPaused) {
                 this.jump();
             }
-        }, 5000); 
+        }, 5000);
+
         this.applyGravity();
-    
-        setInterval(() => {
-            if (this.isDead) {
-                this.playAnimation(this.IMAGES_DEAD);
-            } else if (this.isHurtAnimation) {
-                this.playAnimation(this.IMAGES_HURT);
-            } else if (this.x > 3700) {
-                this.playAnimation(this.IMAGES_ALERT);
-            } else if (this.x <= 3700 && this.x > 3500) {
-                this.playAnimation(this.IMAGES_ATTACK);
-            } else {
-                this.playAnimation(this.IMAGES_WALKING);
+        
+        this.imageInterval = setInterval(() => {
+            if (!animationsPaused) {
+                if (this.isDead) {
+                    this.playAnimation(this.IMAGES_DEAD);
+                } else if (this.isHurtAnimation) {
+                    this.playAnimation(this.IMAGES_HURT);
+                } else if (this.x > 3700) {
+                    this.playAnimation(this.IMAGES_ALERT);
+                } else if (this.x <= 3700 && this.x > 3500) {
+                    this.playAnimation(this.IMAGES_ATTACK);
+                } else {
+                    this.playAnimation(this.IMAGES_WALKING);
+                }
             }
         }, 200);
+    }
+
+    /**
+     * cleans up intervals when the object is removed
+     */
+    cleanup() {
+        if (this.movementInterval) clearInterval(this.movementInterval);
+        if (this.jumpInterval) clearInterval(this.jumpInterval);
+        if (this.imageInterval) clearInterval(this.imageInterval);
     }
 
     /**
@@ -150,8 +165,7 @@ class Endboss extends MovableObject {
     */
     jump() {
         if (!this.isAboveGround()) {
-            this.speedY = 25; 
-            this.lastJump = new Date().getTime(); 
+            this.speedY = 50; 
         }
     }
 

@@ -52,29 +52,41 @@ class ChickenSmall extends MovableObject {
         this.isDead = false; 
         this.markedForRemoval = false;
 
-        this.animate();
+        this.animationStarted = false;
     }
 
     /**
      * animates small chicken enemy
      */
     animate() {
-        setInterval(() => {   
-            if (!this.isDead) {     
+        this.animationStarted = true;
+        
+        this.movementInterval = setInterval(() => {   
+            if (!this.isDead && !animationsPaused) {     
                 this.moveLeft();
             }
         }, 1000 / 60);
         
-        setInterval(() => {       
-            if (this.isDead) {
-                if (!this.deathAnimationComplete) {
-                    this.loadImage(this.IMAGES_DEAD[0]);
-                    this.deathAnimationComplete = true;
+        this.imageInterval = setInterval(() => {       
+            if (!animationsPaused) {
+                if (this.isDead) {
+                    if (!this.deathAnimationComplete) {
+                        this.loadImage(this.IMAGES_DEAD[0]);
+                        this.deathAnimationComplete = true;
+                    }
+                } else {
+                    this.playAnimation(this.IMAGES_WALKING);
                 }
-            } else {
-                this.playAnimation(this.IMAGES_WALKING);
             }
         }, 200);
+    }
+
+    /**
+     * cleans up intervals when the object is removed
+     */
+    cleanup() {
+        if (this.movementInterval) clearInterval(this.movementInterval);
+        if (this.imageInterval) clearInterval(this.imageInterval);
     }
 
     /**
