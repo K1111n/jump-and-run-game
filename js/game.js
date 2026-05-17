@@ -215,7 +215,8 @@ function checkGameStatus() {
 function restartGame() {
     winDialog.close();
     loseDialog.close();
-    
+    clearInterval(statusInterval);
+
     if (soundManager) {
         soundManager.stopBackgroundMusic();
     }
