@@ -161,7 +161,7 @@ function checkCharacterDeath() {
  */
 function checkEndbossVictory() {
     let endboss = world.level.enemies.find(enemy => enemy instanceof Endboss);
-    if (endboss && endboss.isDead) {
+    if (endboss && endboss.dead) {
         gameEnded = true;
         clearInterval(statusInterval);
         setTimeout(() => {

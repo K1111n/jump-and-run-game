@@ -21,7 +21,7 @@ class Chicken extends MovableObject {
     /**
      * @type {boolean} Death status
      */
-    isDead = false;
+    dead = false;
 
     /**
      * @type {boolean} Death animation completed
@@ -53,7 +53,7 @@ class Chicken extends MovableObject {
     
         this.x = 2000 + Math.random() * 1500;    
         this.speed = 0.15 + Math.random() * 0.25;
-        this.isDead = false; 
+        this.dead = false; 
         this.markedForRemoval = false;
     
         this.animationStarted = false;
@@ -65,14 +65,14 @@ class Chicken extends MovableObject {
     animate() {
         this.animationStarted = true;
         this.movementInterval = setInterval(() => {
-            if (!this.isDead && !animationsPaused) {
+            if (!this.dead && !animationsPaused) {
                 this.moveLeft();
             }
         }, 1000 / 60);
         
         this.imageInterval = setInterval(() => {
             if (!animationsPaused) {
-                if (this.isDead) {
+                if (this.dead) {
                     if (!this.deathAnimationComplete) {
                         this.loadImage(this.IMAGES_DEAD[0]);
                         this.deathAnimationComplete = true;
@@ -105,9 +105,9 @@ class Chicken extends MovableObject {
      * kills the enemy
      */
     killEnemy() {
-        if (this.isDead) return; 
+        if (this.dead) return; 
         
-        this.isDead = true;
+        this.dead = true;
         this.speed = 0;
         
         this.loadImage(this.IMAGES_DEAD[0]);

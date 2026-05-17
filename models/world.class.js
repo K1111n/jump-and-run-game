@@ -155,7 +155,7 @@ class World {
         let characterTookDamage = false;
         
         this.level.enemies.forEach((enemy) => {
-            if(this.character.isColliding(enemy) && !enemy.isDead) {
+            if(this.character.isColliding(enemy) && !enemy.dead) {
                 if(this.isJumpKill(enemy)) {
                     enemiesToDefeat.push(enemy);
                 } else if(!characterTookDamage && !this.character.invulnerable) {
@@ -246,7 +246,7 @@ class World {
         
         this.throwableObjects.forEach((bottle, bottleIndex) => {
             this.level.enemies.forEach((enemy) => {
-                if(bottle.isColliding(enemy) && !enemy.isDead && !bottle.bottleSplash) {
+                if(bottle.isColliding(enemy) && !enemy.dead && !bottle.bottleSplash) {
                     this.handleBottleHit(enemy, bottle, bottleIndex, bottlesToRemove);
                 }
             });

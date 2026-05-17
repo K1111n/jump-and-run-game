@@ -26,7 +26,7 @@ class Endboss extends MovableObject {
     /**
      * @type {boolean} death status
      */
-    isDead = false;
+    dead = false;
 
     /**
      * @type {boolean} Hurt animation status
@@ -97,13 +97,13 @@ class Endboss extends MovableObject {
         this.animationStarted = true;
         
         this.movementInterval = setInterval(() => {
-            if (!this.isDead && !animationsPaused) {
+            if (!this.dead && !animationsPaused) {
                 this.moveLeft();
             }
         }, 1000 / 60);
 
         this.jumpInterval = setInterval(() => {
-            if (!this.isDead && !animationsPaused) {
+            if (!this.dead && !animationsPaused) {
                 this.jump();
             }
         }, 5000);
@@ -112,7 +112,7 @@ class Endboss extends MovableObject {
         
         this.imageInterval = setInterval(() => {
             if (!animationsPaused) {
-                if (this.isDead) {
+                if (this.dead) {
                     this.playAnimation(this.IMAGES_DEAD);
                 } else if (this.isHurtAnimation) {
                     this.playAnimation(this.IMAGES_HURT);
@@ -150,7 +150,7 @@ class Endboss extends MovableObject {
      * @returns {boolean} Whether the endboss is dead, or if another hit is possible.
      */
     hit() {
-        if (this.isDead) return; 
+        if (this.dead) return; 
         
         this.energy -= 5;
         this.isHurtAnimation = true;
@@ -161,7 +161,7 @@ class Endboss extends MovableObject {
         
         if (this.energy <= 0) {
             this.energy = 0;
-            this.isDead = true;
+            this.dead = true;
             this.speed = 0;
             setTimeout(() => {
                 this.markedForRemoval = true;
