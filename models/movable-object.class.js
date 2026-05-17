@@ -97,13 +97,6 @@ class MovableObject extends DrawableObject {
     }
 
     /**
-     * decreases the number of bottles when one is thrown
-     */
-    bottleHasBeenThrown() {
-        this.bottles -= 1;
-    }
-
-    /**
      *  checks if energy is 0
      * @returns {boolean} True if energy is 0
      */

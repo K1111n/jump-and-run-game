@@ -343,25 +343,6 @@ class Character extends MovableObject {
     }
 
     /**
-     * Plays jump animation only once per jump
-     */
-    playJumpAnimationOnce() {
-        if (this.jumpAnimationStarted && this.jumpAnimationFrame < this.IMAGES_JUMPING.length) {
-            let frameIndex = Math.floor(this.jumpAnimationFrame);
-            if (frameIndex < this.IMAGES_JUMPING.length) {
-                this.img = this.imageCache[this.IMAGES_JUMPING[frameIndex]];
-            }
-            
-            this.jumpAnimationFrame += 0.3; 
-        } else if (!this.jumpAnimationStarted) {
-            this.img = this.imageCache[this.IMAGES_JUMPING[0]];
-        }
-        else {
-            this.img = this.imageCache[this.IMAGES_JUMPING[this.IMAGES_JUMPING.length - 1]];
-        }
-    }
-
-    /**
      * makes the object jump - override to reset animation
      */
     jump() {
