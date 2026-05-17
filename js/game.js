@@ -419,17 +419,3 @@ function handleButtonPress(btnId, isPressed) {
     }
 }
 
-/**
- * initializes the mute button functionality
- */
-function initMuteButton() {
-    const muteBtn = document.getElementById('mute-btn');
-    if (muteBtn) {
-        muteBtn.addEventListener('click', () => {
-            if (soundManager) {
-                soundManager.toggleMute();
-                muteBtn.textContent = soundManager.muted ? '🔇' : '🔊';
-            }
-        });
-    }
-}
