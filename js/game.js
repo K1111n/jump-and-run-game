@@ -219,11 +219,10 @@ function restartGame() {
     if (soundManager) {
         soundManager.stopBackgroundMusic();
     }
-    if (world && world.level && world.level.enemies) {
+    if (world) {
+        world.cleanup();
         world.level.enemies.forEach(enemy => {
-            if (enemy.cleanup) {
-                enemy.cleanup();
-            }
+            if (enemy.cleanup) enemy.cleanup();
         });
     }
 

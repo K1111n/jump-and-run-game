@@ -153,7 +153,7 @@ class Character extends MovableObject {
      * Handles character movement and camera positioning
      */
     startMovementLoop() {
-        setInterval(() => {
+        this.movementInterval = setInterval(() => {
             if(!this.isDead()) {
                 this.handleMovement();
             }
@@ -165,10 +165,16 @@ class Character extends MovableObject {
      * Handles character animation state changes
      */
     startAnimationLoop() {
-        setInterval(() => {
+        this.animationInterval = setInterval(() => {
             this.handleJumpState();
             this.selectAndPlayAnimation();
         }, 150);
+    }
+
+    cleanup() {
+        clearInterval(this.movementInterval);
+        clearInterval(this.animationInterval);
+        clearInterval(this.gravityInterval);
     }
 
     /**

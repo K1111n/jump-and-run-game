@@ -97,13 +97,21 @@ class World {
      * Starts the game logic loop
      */
     run() {
-        setInterval(() => {
+        this.collisionInterval = setInterval(() => {
             this.checkCollisions();
         }, 1000 / 60);
-    
-        setInterval(() => {
+
+        this.throwInterval = setInterval(() => {
             this.checkThrowObjects();
-        }, 100); 
+        }, 100);
+    }
+
+    cleanup() {
+        clearInterval(this.collisionInterval);
+        clearInterval(this.throwInterval);
+        if (this.character) {
+            this.character.cleanup();
+        }
     }
 
     /**
