@@ -17,7 +17,7 @@ function closeControls() {
  * @param {boolean} won 
  */
 function showEndDialog(won) {
-    pauseAllAnimations(); 
+    pauseAllAnimations();
     if (world) {
         world = null;
     }
@@ -31,6 +31,7 @@ function showEndDialog(won) {
             soundManager.play('youlost');
         }
     }
+    window.addEventListener('keydown', handleEnterStart);
 }
 
 /**

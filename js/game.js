@@ -105,16 +105,13 @@ function init() {
  * @param {KeyboardEvent} event 
  */
 function handleEnterStart(event) {
-    if (event.key === "Enter" && !gameStarted) {
-        if (controlsDialog && controlsDialog.open) {
-            closeControls();
-        } 
-        else if (startDialog && startDialog.open) {
-            startGame();
-        }
-        else if ((winDialog && winDialog.open) || (loseDialog && loseDialog.open)) {
-            restartGame();
-        }
+    if (event.key !== "Enter") return;
+    if (controlsDialog && controlsDialog.open) {
+        closeControls();
+    } else if (startDialog && startDialog.open) {
+        startGame();
+    } else if ((winDialog && winDialog.open) || (loseDialog && loseDialog.open)) {
+        restartGame();
     }
 }
 
