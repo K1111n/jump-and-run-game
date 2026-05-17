@@ -29,16 +29,6 @@ class MovableObject extends DrawableObject {
     energy = 100;
 
     /**
-     * @type {number} Number of collected coins
-     */
-    coins = 0;
-
-    /**
-     * @type {number} Number of collected bottles
-     */
-    bottles = 0;
-
-    /**
      * @type {number} Timestamp of the last hit
      */
     lastHit = 0;
@@ -76,20 +66,6 @@ class MovableObject extends DrawableObject {
                 window.soundManager.play('hurt');
             }
         }
-    }
-
-    /**
-     * increases the number of collected coins
-     */
-    collectCoin() {
-        this.coins += 1;
-    }
-
-    /**
-     * increases the number of collected bottles
-     */
-    collectBottle() {
-        this.bottles += 1;
     }
 
     /**
