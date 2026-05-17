@@ -78,12 +78,9 @@ class Controller {
             window.soundManager.resumeBackgroundMusic();
         }
 
-        if (world && world.pauseTime) {
+        if (world && world.pauseTime && world.character) {
             const pauseDuration = Date.now() - world.pauseTime;
-        }
-
-        if(world.character) {
-            world.character.lastHitTime += pauseDuration;
+            world.character.lastHit += pauseDuration;
             world.character.lastMovement += pauseDuration;
         }
     }
