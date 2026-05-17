@@ -130,6 +130,15 @@ class Endboss extends MovableObject {
     /**
      * cleans up intervals when the object is removed
      */
+    getHitbox() {
+        return {
+            x: this.x + 20,
+            y: this.y + 60,
+            width: this.width - 40,
+            height: this.height - 70,
+        };
+    }
+
     cleanup() {
         if (this.movementInterval) clearInterval(this.movementInterval);
         if (this.jumpInterval) clearInterval(this.jumpInterval);

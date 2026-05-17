@@ -72,4 +72,13 @@ class ThrowableObject extends MovableObject {
             }
         }, 100);
     }
+
+    getHitbox() {
+        return {
+            x: this.x + 10,
+            y: this.y + 10,
+            width: this.width - 20,
+            height: this.height - 20,
+        };
+    }
 }

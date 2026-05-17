@@ -16,7 +16,16 @@ class Bottles extends DrawableObject {
         this.loadImages(this.IMAGES_BOTTLE_ON_GROUND);
         this.width = 70;
         this.height = 70;
-        this.x = 500 + Math.random() * 1500;    
+        this.x = 500 + Math.random() * 1500;
         this.y = 360;
+    }
+
+    getHitbox() {
+        return {
+            x: this.x + 35,
+            y: this.y + 15,
+            width: 30,
+            height: 60,
+        };
     }
 }

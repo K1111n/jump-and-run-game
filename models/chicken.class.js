@@ -87,6 +87,15 @@ class Chicken extends MovableObject {
     /**
      * cleans up intervals when the chicken is removed
      */
+    getHitbox() {
+        return {
+            x: this.x + 5,
+            y: this.y + 5,
+            width: this.width - 10,
+            height: this.height - 10,
+        };
+    }
+
     cleanup() {
         if (this.movementInterval) clearInterval(this.movementInterval);
         if (this.imageInterval) clearInterval(this.imageInterval);

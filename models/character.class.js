@@ -171,6 +171,15 @@ class Character extends MovableObject {
         }, 150);
     }
 
+    getHitbox() {
+        return {
+            x: this.x + 20,
+            y: this.y + 80,
+            width: this.width - 40,
+            height: this.height - 90,
+        };
+    }
+
     cleanup() {
         clearInterval(this.movementInterval);
         clearInterval(this.animationInterval);

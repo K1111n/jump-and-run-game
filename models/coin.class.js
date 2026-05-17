@@ -16,8 +16,16 @@ class Coin extends DrawableObject {
         this.loadImages(this.IMAGES);
         this.width = 120;
         this.height = 120;
-        this.x = 500 + Math.random() * 1500;    
+        this.x = 500 + Math.random() * 1500;
         this.y = 220;
     }
 
+    getHitbox() {
+        return {
+            x: this.x + 40,
+            y: this.y + 40,
+            width: 40,
+            height: 40,
+        };
+    }
 }
