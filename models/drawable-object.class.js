@@ -11,7 +11,7 @@ class DrawableObject {
     /**
      * @type {Object} Cache for loaded images 
      */
-    imageCache = [];
+    imageCache = {};
 
     /**
      * @type {number} Current image index for animations
