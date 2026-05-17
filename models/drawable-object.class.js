@@ -55,11 +55,10 @@ class DrawableObject {
     isColliding(mo) {
         let thisBox = this.getHitbox();
         let moBox = mo.getHitbox();
-    
-    return thisBox.x < moBox.x + moBox.width &&
-           thisBox.x + thisBox.width > moBox.x &&
-           thisBox.y < moBox.y + moBox.height &&
-           thisBox.y + thisBox.height > moBox.y;
+        return thisBox.x < moBox.x + moBox.width &&
+               thisBox.x + thisBox.width > moBox.x &&
+               thisBox.y < moBox.y + moBox.height &&
+               thisBox.y + thisBox.height > moBox.y;
     }
 
     getHitbox() {
