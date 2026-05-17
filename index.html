@@ -51,8 +51,8 @@
             <img src="./img/9_intro_outro_screens/start/startscreen_2.png" alt="Start Screen" class="dialog-image">
             <div class="overlay-content" style="display:flex;">
                 <button class="game-button start-button" onclick="startGame()">Start Game</button>
-                <button class="game-button" style="background: #FF9800;" onclick="showControls()">Controls</button>
-                <button class="game-button" style="background: #9C27B0;" onclick="showImpressum()">Impressum</button>
+                <button class="game-button controls-button" onclick="showControls()">Controls</button>
+                <button class="game-button impressum-button" onclick="showImpressum()">Impressum</button>
             </div>
         </div>
     </dialog>
@@ -82,30 +82,30 @@
 
     <dialog id="pauseDialog">
         <div class="dialog-content">
-            <h2 style="color: white; margin-bottom: 20px;">GAME PAUSED</h2>
+            <h2 class="dialog-heading">GAME PAUSED</h2>
             <button class="game-button" id="resume-btn">Resume</button>
-            <button class="game-button" id="quit-btn" style="background: #F44336;">Quit to Menu</button>
+            <button class="game-button quit-button" id="quit-btn">Quit to Menu</button>
         </div>
     </dialog>
 
     <dialog id="controlsDialog">
         <div class="dialog-content">
-            <h2 style="color: white; margin-bottom: 30px; font-family: Arial, sans-serif; text-align: center;">CONTROLS</h2>
-            <div style="color: white; font-size: 18px; line-height: 2;">
+            <h2 class="dialog-heading">CONTROLS</h2>
+            <div class="controls-list">
                 <p>⬅️  - Move Left</p>
                 <p>➡️ - Move Right</p>
                 <p>⬆️ - Jump</p>
                 <p>SPACEBAR - Throw</p>
             </div>
             <div style="text-align: center; margin-top: 30px;">
-                <button class="game-button" style="background: #607D8B;" onclick="closeControls()">Back</button>
+                <button class="game-button back-button" onclick="closeControls()">Back</button>
             </div>
         </div>
     </dialog>
 
     <dialog id="winDialog">
         <div class="dialog-content">
-            <img src="./img/You won, you lost/You won A.png" alt="You Won" class="dialog-image" style="height: 475px; width: 720px;">
+            <img src="./img/You won, you lost/You won A.png" alt="You Won" class="dialog-image win-image">
             <div class="overlay-content">
                 <button class="game-button restart-button" onclick="restartGame()">Play again</button>
             </div>
@@ -114,7 +114,7 @@
 
     <dialog id="loseDialog">
         <div class="dialog-content">
-            <img src="./img/You won, you lost/You lost b.png" alt="Game Over" class="dialog-image" style="max-width: 100%; max-height: 100%; object-fit: contain;">
+            <img src="./img/You won, you lost/You lost b.png" alt="Game Over" class="dialog-image lose-image">
             <div class="overlay-content">
                 <button class="game-button restart-button" onclick="restartGame()">Try again</button>
             </div>
@@ -123,22 +123,22 @@
 
     <dialog id="impressumDialog">
         <div class="dialog-content">
-            <button class="close-btn" onclick="closeImpressum()" style="position: absolute; top: 10px; right: 10px; background: #F44336; color: white; border: none; border-radius: 50%; width: 30px; height: 30px; cursor: pointer; font-size: 20px;">×</button>
-        
-            <h1 style="color: white; margin-bottom: 20px;">Impressum</h1>
-            <p style="color: white; line-height: 1.6;">
+            <button class="close-btn impressum-close-btn" onclick="closeImpressum()">×</button>
+
+            <h1 class="dialog-heading">Impressum</h1>
+            <p class="dialog-text">
                 Kajanan Yoganathan<br />
                 Hugo-Küchingstraße, 6<br />
                 59067 Hamm
             </p>
         
-            <h2 style="color: white; margin-top: 30px; margin-bottom: 15px;">Kontakt</h2>
-            <p style="color: white; line-height: 1.6;">
+            <h2 class="dialog-subheading">Kontakt</h2>
+            <p class="dialog-text">
                 Telefon: 01511111111<br />
                 E-Mail: jeezy93@hotmail.de
             </p>
 
-            <p style="color: white; font-size: 14px; margin-top: 30px;">
+            <p class="dialog-source">
                 Quelle: <a href="https://www.e-recht24.de/impressum-generator.html" target="_blank" style="color: #4CAF50;">https://www.e-recht24.de/impressum-generator.html</a>
             </p>
         </div>

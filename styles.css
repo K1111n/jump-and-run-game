@@ -428,3 +428,78 @@ dialog::backdrop {
     font-size: 16px;
     opacity: 0.9;
 }
+
+.controls-button {
+    background: #FF9800 !important;
+}
+
+.impressum-button {
+    background: #9C27B0 !important;
+}
+
+.quit-button {
+    background: #F44336 !important;
+}
+
+.back-button {
+    background: #607D8B !important;
+}
+
+.dialog-heading {
+    color: white;
+    margin-bottom: 20px;
+    font-family: Arial, sans-serif;
+    text-align: center;
+}
+
+.dialog-subheading {
+    color: white;
+    margin-top: 30px;
+    margin-bottom: 15px;
+    font-family: Arial, sans-serif;
+}
+
+.dialog-text {
+    color: white;
+    line-height: 1.6;
+    font-family: Arial, sans-serif;
+}
+
+.dialog-source {
+    color: white;
+    font-size: 14px;
+    margin-top: 30px;
+    font-family: Arial, sans-serif;
+}
+
+.controls-list {
+    color: white;
+    font-size: 18px;
+    line-height: 2;
+    font-family: Arial, sans-serif;
+}
+
+.win-image {
+    height: 475px !important;
+    width: 720px !important;
+}
+
+.lose-image {
+    max-width: 100% !important;
+    max-height: 100% !important;
+    object-fit: contain !important;
+}
+
+.impressum-close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: #F44336;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    font-size: 20px;
+}
