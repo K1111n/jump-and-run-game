@@ -25,7 +25,7 @@ class Character extends MovableObject {
     /**
      * @type {number} Timestamp of last movement
      */
-    lastMovement = new Date().getTime();
+    lastMovement = Date.now();
 
     /**
      * @type {boolean} Indicates if death animation is complete
@@ -193,18 +193,18 @@ class Character extends MovableObject {
         if(this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
             this.moveRight();
             this.otherDirection = false;
-            this.lastMovement = new Date().getTime();
+            this.lastMovement = Date.now();
         }
 
         if(this.world.keyboard.LEFT && this.x > 0) {
             this.moveLeft();
             this.otherDirection = true;
-            this.lastMovement = new Date().getTime();
+            this.lastMovement = Date.now();
         }
 
         if(this.world.keyboard.UP && !this.isAboveGround()) {
             this.jump();
-            this.lastMovement = new Date().getTime();
+            this.lastMovement = Date.now();
         }
     }
 
@@ -279,7 +279,7 @@ class Character extends MovableObject {
      * @returns {boolean} True if sleeping
      */
     isSleeping() {
-        let timepassed = new Date().getTime() - this.lastMovement;
+        let timepassed = Date.now() - this.lastMovement;
         timepassed = timepassed / 1000; 
         return timepassed > 10; 
     }
@@ -294,7 +294,7 @@ class Character extends MovableObject {
         if(this.energy <= 0) {
             this.energy = 0;
         } else {
-            this.lastHit = new Date().getTime();
+            this.lastHit = Date.now();
             this.invulnerable = true;
             
             setTimeout(() => {
@@ -309,7 +309,7 @@ class Character extends MovableObject {
      */
     isHurt() {
         if(this.isDead()) return false;
-        let timepassed = new Date().getTime() - this.lastHit; 
+        let timepassed = Date.now() - this.lastHit; 
         timepassed = timepassed / 1000; 
         return timepassed < 1;
     }
