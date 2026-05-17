@@ -311,20 +311,14 @@ class World {
         this.addObjectsToMap(this.level.bottles);
         this.addObjectsToMap(this.throwableObjects);
         
-        this.ctx.translate(-this.camera_x, 0); // Back
-        // -------- Space for fixed Objects --------
-        this.addToMap(this.statusBar);        
-        this.addToMap(this.coinBar);        
-        this.addToMap(this.bottleBar);        
-        this.addToMap(this.statusBarEndboss);
-        this.ctx.translate(this.camera_x, 0); // Forward
-        
         this.ctx.translate(-this.camera_x, 0);
+        this.addToMap(this.statusBar);
+        this.addToMap(this.coinBar);
+        this.addToMap(this.bottleBar);
+        this.addToMap(this.statusBarEndboss);
+        this.ctx.translate(this.camera_x, 0);
 
-        let self = this;
-        requestAnimationFrame(function() {  
-            self.draw();
-        });
+        requestAnimationFrame(() => this.draw());
     }
 
     /**
