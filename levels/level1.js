@@ -1,78 +1,32 @@
-let level1 = new Level(
-    [
-        new Chicken(), 
-        new Chicken(),
-        new Chicken(),
-        new Chicken(),
-        new Chicken(),
-        new Endboss(),
-        new ChickenSmall(),
-        new ChickenSmall(),
-        new ChickenSmall(),
-        new ChickenSmall(),
-        new ChickenSmall(),
-    ],
-    [
-        new Cloud(),
-    ],
-    [
-        new BackgroundObject('./img/5_background/layers/air.png', -719),
-        new BackgroundObject('./img/5_background/layers/3_third_layer/2.png', -719),
-        new BackgroundObject('./img/5_background/layers/2_second_layer/2.png', -719),
-        new BackgroundObject('./img/5_background/layers/1_first_layer/2.png', -719),
+function createLevel1() {
+    const BG = './img/5_background/layers';
+    const W = 719;
+    const backgrounds = [];
+    for (let i = 0; i < 7; i++) {
+        const variant = i % 2 === 0 ? '2' : '1';
+        backgrounds.push(
+            new BackgroundObject(`${BG}/air.png`, W * i - W),
+            new BackgroundObject(`${BG}/3_third_layer/${variant}.png`, W * i - W),
+            new BackgroundObject(`${BG}/2_second_layer/${variant}.png`, W * i - W),
+            new BackgroundObject(`${BG}/1_first_layer/${variant}.png`, W * i - W),
+        );
+    }
 
-        new BackgroundObject('./img/5_background/layers/air.png', 0),
-        new BackgroundObject('./img/5_background/layers/3_third_layer/1.png', 0),
-        new BackgroundObject('./img/5_background/layers/2_second_layer/1.png', 0),
-        new BackgroundObject('./img/5_background/layers/1_first_layer/1.png', 0),
+    return new Level(
+        [
+            new Chicken(), new Chicken(), new Chicken(), new Chicken(), new Chicken(),
+            new Endboss(),
+            new ChickenSmall(), new ChickenSmall(), new ChickenSmall(), new ChickenSmall(), new ChickenSmall(),
+        ],
+        [new Cloud()],
+        backgrounds,
+        [new Coin(), new Coin(), new Coin(), new Coin(), new Coin()],
+        [
+            new Bottles(), new Bottles(), new Bottles(),
+            new Bottles(), new Bottles(), new Bottles(),
+            new Bottles(), new Bottles(), new Bottles(),
+        ]
+    );
+}
 
-        new BackgroundObject('./img/5_background/layers/air.png', 719),
-        new BackgroundObject('./img/5_background/layers/3_third_layer/2.png', 719),
-        new BackgroundObject('./img/5_background/layers/2_second_layer/2.png', 719),
-        new BackgroundObject('./img/5_background/layers/1_first_layer/2.png', 719),
-
-        new BackgroundObject('./img/5_background/layers/air.png', 719 *2),
-        new BackgroundObject('./img/5_background/layers/3_third_layer/1.png', 719 *2),
-        new BackgroundObject('./img/5_background/layers/2_second_layer/1.png', 719 *2),
-        new BackgroundObject('./img/5_background/layers/1_first_layer/1.png', 719 *2),
-
-        new BackgroundObject('./img/5_background/layers/air.png', 719 *3),
-        new BackgroundObject('./img/5_background/layers/3_third_layer/2.png', 719 *3),
-        new BackgroundObject('./img/5_background/layers/2_second_layer/2.png', 719 *3),
-        new BackgroundObject('./img/5_background/layers/1_first_layer/2.png', 719 *3),
-
-        new BackgroundObject('./img/5_background/layers/air.png', 719 *4),
-        new BackgroundObject('./img/5_background/layers/3_third_layer/1.png', 719 *4),
-        new BackgroundObject('./img/5_background/layers/2_second_layer/1.png', 719 *4),
-        new BackgroundObject('./img/5_background/layers/1_first_layer/1.png', 719 *4),
-
-        new BackgroundObject('./img/5_background/layers/air.png', 719 *5),
-        new BackgroundObject('./img/5_background/layers/3_third_layer/2.png', 719 *5),
-        new BackgroundObject('./img/5_background/layers/2_second_layer/2.png', 719 *5),
-        new BackgroundObject('./img/5_background/layers/1_first_layer/2.png', 719 *5),
-
-        new BackgroundObject('./img/5_background/layers/air.png', 719 *6),
-        new BackgroundObject('./img/5_background/layers/3_third_layer/1.png', 719 *6),
-        new BackgroundObject('./img/5_background/layers/2_second_layer/1.png', 719 *6),
-        new BackgroundObject('./img/5_background/layers/1_first_layer/1.png', 719 *6),
-
-    ],
-    [
-        new Coin(),
-        new Coin(),
-        new Coin(),
-        new Coin(),
-        new Coin(),
-    ],
-    [
-        new Bottles(),
-        new Bottles(),
-        new Bottles(),
-        new Bottles(),
-        new Bottles(),
-        new Bottles(),
-        new Bottles(),
-        new Bottles(),
-        new Bottles(),
-    ]
-);
+let level1 = createLevel1();
