@@ -176,14 +176,16 @@ class World {
      * Checks if an enemy is killed by a jump
      */
     isJumpKill(enemy) {
+        if (!this.character.isAboveGround()) return false;
+
         let characterBox = this.character.getHitbox();
         let enemyBox = enemy.getHitbox();
-        
+
         let isFalling = this.character.speedY < 0;
         let characterBottom = characterBox.y + characterBox.height;
         let enemyTop = enemyBox.y;
         let overlapY = characterBottom - enemyTop;
-        
+
         return isFalling && overlapY >= 0 && overlapY <= 50;
     }
 
@@ -316,7 +318,6 @@ class World {
         this.addToMap(this.coinBar);
         this.addToMap(this.bottleBar);
         this.addToMap(this.statusBarEndboss);
-        this.ctx.translate(this.camera_x, 0);
 
         requestAnimationFrame(() => this.draw());
     }
