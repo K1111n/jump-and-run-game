@@ -60,11 +60,7 @@ class MovableObject extends DrawableObject {
      * @returns {boolean} True if in the air
      */
     isAboveGround() {
-        if(this instanceof ThrowableObject) { // Throwable Object should always fall
-            return true;
-        } else {
-            return this.y < 150;
-        }
+        return this.y < 150;
     }
 
     /**

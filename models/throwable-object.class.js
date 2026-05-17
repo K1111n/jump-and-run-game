@@ -73,6 +73,10 @@ class ThrowableObject extends MovableObject {
         }, 100);
     }
 
+    isAboveGround() {
+        return true;
+    }
+
     getHitbox() {
         return {
             x: this.x + 10,
